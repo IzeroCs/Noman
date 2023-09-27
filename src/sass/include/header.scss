@@ -1,0 +1,6 @@
+.header {
+    background-color: $header-bg;
+    height: $header-height;
+
+    @include box-shadow(5px 5px 10px rgba(0, 0, 0, 0.01))
+}
