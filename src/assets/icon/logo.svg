@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M512 0L512 0L512 512L0 512L0 0L512 0Z" id="path_1" />
+    <path d="M512 0L512 0L512 512L0 512L0 0L512 0L512 0Z" id="path_2" />
+    <clipPath id="clip_1">
+      <use xlink:href="#path_1" clip-rule="evenodd" fill-rule="evenodd" />
+    </clipPath>
+    <clipPath id="clip_2">
+      <use xlink:href="#path_2" clip-rule="evenodd" fill-rule="evenodd" />
+    </clipPath>
+  </defs>
+  <g id="logo" clip-path="url(#clip_1)">
+    <path d="M512 0L512 0L512 512L0 512L0 0L512 0Z" id="logo" fill="none" stroke="none" />
+    <g id="Mask-Group">
+      <path d="M512 0L512 0L512 512L0 512L0 0L512 0L512 0Z" id="path_1" fill="none" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#clip_2)">
+        <g id="file-folder-document-2-svgrepo-com">
+          <path d="M512 0L512 0L512 512L0 512L0 0L512 0L512 0Z" id="file-folder-document-2-svgrepo-com#1" fill="none" stroke="none" />
+          <path d="M170.667 234.667L207.147 198.187C211.12 194.245 216.483 192.024 222.08 192L405.333 192L405.333 85.3333C405.333 73.5513 395.782 64 384 64L128 64C116.218 64 106.667 73.5513 106.667 85.3333L106.667 234.667L170.667 234.667L170.667 234.667ZM362.667 362.667L277.333 362.667" id="secondary" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="67" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M222.08 192L426.667 192C438.449 192 448 201.551 448 213.333L448 426.667C448 438.449 438.449 448 426.667 448L85.3333 448C73.5513 448 64 438.449 64 426.667L64 256C64 244.218 73.5513 234.667 85.3333 234.667L170.667 234.667L207.147 198.187C211.12 194.245 216.483 192.024 222.08 192L222.08 192L222.08 192Z" id="primary" fill="none" stroke="#00C0FA" stroke-width="67" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
