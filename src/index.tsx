@@ -4,6 +4,7 @@ import App from "./components/App"
 import reportWebVitals from "./reportWebVitals"
 import Store from "./store"
 import { Provider } from "react-redux"
+import "./i18next"
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

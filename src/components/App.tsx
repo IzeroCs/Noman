@@ -25,8 +25,10 @@ const App: React.FC = () => {
   return <div style={{
     height: windowHeight + "px"
   }}>
-    <Header />
-    <ContextMenu />
+    <div className="wrapper">
+      <Header />
+      <ContextMenu />
+    </div>
   </div>
 }
 

@@ -1,6 +1,58 @@
 .header {
-    background-color: $header-bg;
+    background-color: $header-bg-color;
+    height: $header-height;
+    position: relative;
+    opacity: 1;
+    @include box-shadow(5px 5px 15px rgba(0, 0, 0, 0.1));
+}
+
+.header-logo {
+    width: $header-logo;
+    height: $header-logo;
+    position: absolute;
+    top: 50%;
+    left: $header-pl;
+
+    @include translate(0, -50%);
+    @include user-select(none);
+}
+
+.header-title {
+    color: $header-title-color;
+    font-weight: bold;
+    font-size: 1.1em;
+    display: inline;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    left: $header-logo + ($header-pl * 2);
+    line-height: $header-height;
+
+    @include user-select(none);
+}
+
+.header-action {
+    position: absolute;
+    right: $header-pr;
+    height: $header-height;
+}
+
+.header-button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
     height: $header-height;
 
-    @include box-shadow(5px 5px 10px rgba(0, 0, 0, 0.01))
+    &:hover>.header-icon {
+        color: rgba($header-icon-color, 0.7);
+    }
+}
+
+.header-icon {
+    color: $header-icon-color;
+    width: $header-icon;
+    height: $header-icon;
+
+    @include transition($transition-default color);
 }
