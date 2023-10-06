@@ -6,7 +6,7 @@ export type HeaderState = {
 }
 
 const initialState: HeaderState = {
-  title: "Noman Station",
+  title: "Noman Cloud",
 }
 
 export const Header = createSlice({

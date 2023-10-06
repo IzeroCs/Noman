@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Nunito', sans-serif;
-    background-color: #f0f0f0;
+    background-color: $bg-color;
     // background-image: url(../assets/icon/cover_bg.jpg);
     // background-repeat: no-repeat;
     // background-size: cover;
@@ -19,13 +19,8 @@ body {
 }
 
 .wrapper {
-    background-color: #fff;
-    opacity: 1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    background-color: transparent;
 }
 
 @import "./include/header.scss";
+@import "./include/main.scss";

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Header from "./include/Header"
+import Main from "./include/Main"
 import ContextMenu from "./include/ContextMenu"
 import "../sass/app.scss"
 
@@ -27,6 +28,7 @@ const App: React.FC = () => {
   }}>
     <div className="wrapper">
       <Header />
+      <Main />
       <ContextMenu />
     </div>
   </div>

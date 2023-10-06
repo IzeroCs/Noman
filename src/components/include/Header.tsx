@@ -11,12 +11,16 @@ const Header: React.FC<HeaderProps &
   const title = useAppSelector(HeaderSelector.title)
 
   return <header className="header">
-    <img src={logo} alt={title} className="header-logo" />
-    <p className="header-title">{title}</p>
-    <div className="header-action">
-      <button type="button" className="header-button" title="Person">
-        <Icon icon="user" className="header-icon" />
-      </button>
+    <div className="header-logo-wrapper">
+      <img src={logo} alt={title} className="header-logo" />
+      <p className="header-title">{title}</p>
+    </div>
+    <div className="header-action-wrapper">
+      <div className="header-action">
+        <button type="button" className="header-button" title="Person">
+          <Icon icon="user" className="header-icon" />
+        </button>
+      </div>
     </div>
   </header>
 }

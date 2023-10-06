@@ -6,12 +6,22 @@
     @include box-shadow(5px 5px 15px rgba(0, 0, 0, 0.1));
 }
 
+.header-logo-wrapper {
+    background-color: $header-bg-color;
+    position: absolute;
+    height: 100%;
+    padding-left: $header-pl;
+    padding-right: $header-pr;
+
+    @include border-radius(0 $header-height * 0.5 $header-height * 0.5 0);
+    @include box-shadow(1px 1px 15px rgba(0, 0, 0, 0.1));
+}
+
 .header-logo {
     width: $header-logo;
     height: $header-logo;
-    position: absolute;
+    position: relative;
     top: 50%;
-    left: $header-pl;
 
     @include translate(0, -50%);
     @include user-select(none);
@@ -21,20 +31,24 @@
     color: $header-title-color;
     font-weight: bold;
     font-size: 1.1em;
-    display: inline;
-    position: absolute;
+    display: inline-block;
     padding: 0;
     margin: 0;
-    left: $header-logo + ($header-pl * 2);
-    line-height: $header-height;
+    margin-left: $header-pl;
+    vertical-align: middle;
 
     @include user-select(none);
 }
 
-.header-action {
+.header-action-wrapper {
     position: absolute;
-    right: $header-pr;
+    right: 0;
     height: $header-height;
+}
+
+.header-action {
+    margin-left: $header-pl;
+    margin-right: $header-pr;
 }
 
 .header-button {
