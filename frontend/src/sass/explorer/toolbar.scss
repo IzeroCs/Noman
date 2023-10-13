@@ -1,0 +1,52 @@
+.explorer-toolbar {
+    display: flex;
+    height: $explorer-toolbar-height;
+    padding-left: 20px;
+    padding-top: 10px;
+
+    &-view {
+        flex-direction: column;
+        margin-right: 20px;
+    }
+
+    &-view-button {
+        color: #eee;
+        background-color: transparent;
+        border: 1px solid #f0f0f0;
+        outline: 0;
+        width: 32px;
+        height: $explorer-toolbar-height;
+
+        &.active {
+            color: #bbb;
+            border-color: #f0f0f0;
+            background-color: #f0f0f0;
+        }
+
+        &:first-child {
+            border-right: 0;
+            @include border-radius($explorer-toolbar-view-radius 0 0 $explorer-toolbar-view-radius);
+        }
+
+        &:last-child {
+            border-left: 0;
+            @include border-radius(0 $explorer-toolbar-view-radius $explorer-toolbar-view-radius 0);
+        }
+    }
+
+    &-search {
+        flex-direction: column;
+    }
+
+    &-search-input {
+        border: 1px solid #eee;
+        height: 100%;
+        padding: 0 15px;
+
+        @include border-radius(6px);
+
+        &::placeholder {
+            color: #ccc;
+        }
+    }
+}

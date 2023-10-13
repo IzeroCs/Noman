@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react"
 import Header from "./include/Header"
 import Main from "./include/Main"
 import ContextMenu from "./include/ContextMenu"
+import Sidebar from "./include/Sidebar"
+import Content from "./include/Content"
+import TreeView from "./view/TreeView"
+import Explorer from "./explorer"
+
 import "../sass/app.scss"
 
 const App: React.FC = () => {
@@ -27,8 +32,14 @@ const App: React.FC = () => {
     height: windowHeight + "px"
   }}>
     <div className="wrapper">
-      <Header />
-      <Main />
+      <Main>
+        <Sidebar>
+          <TreeView />
+        </Sidebar>
+        <Content>
+          <Explorer />
+        </Content>
+      </Main>
       <ContextMenu />
     </div>
   </div>
