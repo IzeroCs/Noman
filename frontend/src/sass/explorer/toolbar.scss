@@ -1,36 +1,48 @@
+.explorer-toolbar-wrapper {
+    height: $explorer-toolbar-height;
+    margin-top: 10px;
+}
+
 .explorer-toolbar {
     display: flex;
     height: $explorer-toolbar-height;
-    padding-left: 20px;
-    padding-top: 10px;
 
     &-view {
         flex-direction: column;
         margin-right: 20px;
+
+        @include box-shadow-depth($explorer-toolbar-shadow-depth);
     }
 
     &-view-button {
-        color: #eee;
-        background-color: transparent;
-        border: 1px solid #f0f0f0;
         outline: 0;
-        width: 32px;
+        color: $on-suface-color;
+        background-color: transparent;
+        border: 1px solid $suface-color;
+        width: $explorer-toolbar-height;
         height: $explorer-toolbar-height;
+        cursor: pointer;
+
+        >svg {
+            width: $explorer-toolbar-icon-size;
+            height: $explorer-toolbar-icon-size;
+            vertical-align: middle;
+        }
 
         &.active {
-            color: #bbb;
-            border-color: #f0f0f0;
-            background-color: #f0f0f0;
+            color: $primary-color;
+            border-color: $suface-color;
+            background-color: $suface-color;
         }
 
         &:first-child {
             border-right: 0;
-            @include border-radius($explorer-toolbar-view-radius 0 0 $explorer-toolbar-view-radius);
+            @include border-radius($explorer-toolbar-radius 0 0 $explorer-toolbar-radius);
         }
 
         &:last-child {
             border-left: 0;
-            @include border-radius(0 $explorer-toolbar-view-radius $explorer-toolbar-view-radius 0);
+            @include border-radius(0 $explorer-toolbar-radius $explorer-toolbar-radius 0);
         }
     }
 
@@ -39,14 +51,59 @@
     }
 
     &-search-input {
-        border: 1px solid #eee;
+        color: $on-suface-color;
+        background-color: $suface-color;
+        border: 1px solid $suface-color;
         height: 100%;
         padding: 0 15px;
+        font-size: 0.9em;
+        outline: 0;
 
-        @include border-radius(6px);
+        @include border-radius($explorer-toolbar-radius);
+        @include transition($transition-default border-color, $transition-default filter);
+        @include box-shadow-depth($explorer-toolbar-shadow-depth);
+        @include box-sizing(border-box);
+
+        &:hover,
+        &:focus {
+            border: 1px solid $primary-color;
+            @include filter(brightness(130%));
+        }
 
         &::placeholder {
-            color: #ccc;
+            color: $on-suface-color;
+        }
+    }
+
+    &-action {
+        outline: 0;
+        background-color: transparent;
+        height: $explorer-toolbar-height;
+        margin-left: auto;
+
+        &-button {
+            outline: 0;
+            color: $on-suface-color;
+            background-color: $suface-color;
+            border: 1px solid $suface-color;
+            width: $explorer-toolbar-height;
+            height: $explorer-toolbar-height;
+            margin-left: 10px;
+            cursor: pointer;
+
+            @include border-radius($explorer-toolbar-radius);
+            @include box-shadow-depth($explorer-toolbar-shadow-depth);
+            @include transition($transition-default filter);
+
+            >svg {
+                width: $explorer-toolbar-icon-size;
+                height: $explorer-toolbar-icon-size;
+                vertical-align: middle;
+            }
+
+            &:hover {
+                @include filter(brightness(150%));
+            }
         }
     }
 }

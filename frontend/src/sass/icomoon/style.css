@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?z63afb');
-  src:  url('fonts/icomoon.eot?z63afb#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?z63afb') format('truetype'),
-    url('fonts/icomoon.woff?z63afb') format('woff'),
-    url('fonts/icomoon.svg?z63afb#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?i7mvy7');
+  src:  url('fonts/icomoon.eot?i7mvy7#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?i7mvy7') format('truetype'),
+    url('fonts/icomoon.woff?i7mvy7') format('woff'),
+    url('fonts/icomoon.svg?i7mvy7#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,48 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ic-explorer-folder:before {
+  content: "\e906";
+}
+.ic-explorer-folder-check:before {
+  content: "\e907";
+}
+.ic-explorer-folder-cloud:before {
+  content: "\e908";
+}
+.ic-explorer-folder-favorite:before {
+  content: "\e909";
+}
+.ic-explorer-folder-open:before {
+  content: "\e90a";
+}
+.ic-explorer-folder-remove:before {
+  content: "\e90b";
+}
+.ic-explorer-folder-security:before {
+  content: "\e90c";
+}
+.ic-explorer-folder-star:before {
+  content: "\e90d";
+}
+.ic-explorer-folder-with-files:before {
+  content: "\e90e";
+}
+.ic-toolbar-action-upload:before {
+  content: "\e904";
+}
+.ic-toolbar-action-add:before {
+  content: "\e905";
+}
+.ic-toolbar-view-grid:before {
+  content: "\e902";
+}
+.ic-toolbar-view-list:before {
+  content: "\e903";
+}
+.ic-manager:before {
+  content: "\e901";
+}
 .ic-user:before {
   content: "\e900";
 }

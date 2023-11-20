@@ -1,0 +1,9 @@
+.explorer-breadcrumb-wrapper {
+    background-color: $suface-color;
+    height: $explorer-breadcrumb-height;
+    width: 100%;
+    margin-top: 10px;
+
+    @include box-shadow-depth(1);
+    @include border-radius($explorer-breadcrumb-radius);
+}

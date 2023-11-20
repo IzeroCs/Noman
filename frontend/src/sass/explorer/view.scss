@@ -1,0 +1,9 @@
+.explorer-view-wrapper {
+    background-color: $suface-color;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex-grow: 1;
+
+    @include border-radius($explorer-view-radius);
+    @include box-shadow-depth(1);
+}
