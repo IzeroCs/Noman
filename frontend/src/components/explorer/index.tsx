@@ -4,12 +4,14 @@ import ExplorerView from "./View"
 
 type ExplorerProps = {}
 
+const breadcrumb = ["Home", "IzeroCs", "Downloads"]
+
 const Explorer: React.FC<ExplorerProps &
   React.HTMLAttributes<HTMLDivElement>
 > = (props) => {
   return <div className="explorer-wrapper">
     <ExplorerToolbar />
-    <ExplorerBreadcrumb />
+    <ExplorerBreadcrumb list={breadcrumb} />
     <ExplorerView />
   </div>
 }

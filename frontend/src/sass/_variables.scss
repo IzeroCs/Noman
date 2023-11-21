@@ -1,4 +1,5 @@
-$icomoon-font-path: "../../assets/fonts/icomoon" !default;
+$icomoon-font-path: "./fonts" !default;
+$icomoon-font-family: "icomoon" !default;
 
 $transition-default: 0.3s;
 
@@ -16,5 +17,6 @@ $explorer-toolbar-shadow-depth: 1;
 
 $explorer-breadcrumb-height: 38px;
 $explorer-breadcrumb-radius: 8px;
+$explorer-breadcrumb-spacing: 12px;
 
 $explorer-view-radius: 8px;

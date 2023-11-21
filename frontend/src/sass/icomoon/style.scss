@@ -1,0 +1,125 @@
+@import "variables";
+
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?pjlzh3');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?pjlzh3#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?pjlzh3') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?pjlzh3') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?pjlzh3##{$icomoon-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="ic-"], [class*=" ic-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ic-arrow-bottom {
+  &:before {
+    content: $ic-arrow-bottom; 
+  }
+}
+.ic-arrow-left {
+  &:before {
+    content: $ic-arrow-left; 
+  }
+}
+.ic-arrow-right {
+  &:before {
+    content: $ic-arrow-right; 
+  }
+}
+.ic-arrow-top {
+  &:before {
+    content: $ic-arrow-top; 
+  }
+}
+.ic-explorer-folder {
+  &:before {
+    content: $ic-explorer-folder; 
+  }
+}
+.ic-explorer-folder-check {
+  &:before {
+    content: $ic-explorer-folder-check; 
+  }
+}
+.ic-explorer-folder-cloud {
+  &:before {
+    content: $ic-explorer-folder-cloud; 
+  }
+}
+.ic-explorer-folder-favorite {
+  &:before {
+    content: $ic-explorer-folder-favorite; 
+  }
+}
+.ic-explorer-folder-open {
+  &:before {
+    content: $ic-explorer-folder-open; 
+  }
+}
+.ic-explorer-folder-remove {
+  &:before {
+    content: $ic-explorer-folder-remove; 
+  }
+}
+.ic-explorer-folder-security {
+  &:before {
+    content: $ic-explorer-folder-security; 
+  }
+}
+.ic-explorer-folder-star {
+  &:before {
+    content: $ic-explorer-folder-star; 
+  }
+}
+.ic-explorer-folder-with-files {
+  &:before {
+    content: $ic-explorer-folder-with-files; 
+  }
+}
+.ic-toolbar-action-upload {
+  &:before {
+    content: $ic-toolbar-action-upload; 
+  }
+}
+.ic-toolbar-action-add {
+  &:before {
+    content: $ic-toolbar-action-add; 
+  }
+}
+.ic-toolbar-view-grid {
+  &:before {
+    content: $ic-toolbar-view-grid; 
+  }
+}
+.ic-toolbar-view-list {
+  &:before {
+    content: $ic-toolbar-view-list; 
+  }
+}
+.ic-manager {
+  &:before {
+    content: $ic-manager; 
+  }
+}
+.ic-user {
+  &:before {
+    content: $ic-user; 
+  }
+}
+

@@ -1,9 +1,62 @@
 .explorer-breadcrumb-wrapper {
     background-color: $suface-color;
     height: $explorer-breadcrumb-height;
+    min-height: $explorer-breadcrumb-height;
     width: 100%;
     margin-top: 10px;
 
     @include box-shadow-depth(1);
     @include border-radius($explorer-breadcrumb-radius);
+}
+
+.explorer-breadcrumb {
+    display: inline-block;
+    list-style: none;
+    white-space: nowrap;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    height: inherit;
+
+    &-item {
+        display: inline-block;
+        padding: 0;
+        line-height: $explorer-breadcrumb-height;
+
+        &:first-child {
+            margin-left: $explorer-breadcrumb-spacing;
+        }
+
+        &:last-child {
+            margin-right: $explorer-breadcrumb-spacing;
+        }
+
+        &+li::before {
+            content: $ic-arrow-right;
+            color: $on-suface-color;
+            font-size: 0.95em;
+            margin: 0 math.div($explorer-breadcrumb-spacing, 2);
+            vertical-align: middle;
+
+            @include icomoon;
+        }
+    }
+
+    &-label {
+        color: $on-suface-color;
+        display: inline-block;
+        font-size: 0.95em;
+        cursor: pointer;
+
+        @include user-select(none);
+
+        &:hover {
+            filter: brightness(150%);
+            @include tap-highlight-color();
+        }
+
+        &.current {
+            pointer-events: none;
+        }
+    }
 }

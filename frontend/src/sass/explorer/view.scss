@@ -3,7 +3,10 @@
     margin-top: 10px;
     margin-bottom: 10px;
     flex-grow: 1;
+    overflow: hidden;
 
     @include border-radius($explorer-view-radius);
     @include box-shadow-depth(1);
 }
+
+@import "./view/list.scss";
