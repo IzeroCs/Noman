@@ -1,19 +1,19 @@
 import i18next from "i18next"
-import backend from "i18next-http-backend"
-import yaml from "yaml"
 import { initReactI18next } from "react-i18next"
 
 i18next
-  .use(backend)
   .use(initReactI18next)
   .init({
+    resources: {
+      vi: {
+        common: require("./locales/vi/common.json"),
+        explorer: require("./locales/vi/explorer.json")
+      }
+    },
     lng: "vi",
     fallbackLng: "en",
     debug: true,
-    backend: {
-      loadPath: "/locales/{{lng}}/{{ns}}.yaml",
-      parse: (data: any) => yaml.parse(data)
-    },
+    defaultNS: "common",
     interpolation: {
       escapeValue: false
     }
