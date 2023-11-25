@@ -2,6 +2,7 @@ $icomoon-font-path: "./fonts" !default;
 $icomoon-font-family: "icomoon" !default;
 
 $transition-default: 0.3s;
+$radius-default: 8px;
 
 $header-wapper-p: 8px;
 $header-height: 55px;
@@ -12,11 +13,11 @@ $header-pr: 30px;
 
 $explorer-toolbar-height: 38px;
 $explorer-toolbar-icon-size: 20px;
-$explorer-toolbar-radius: 8px;
+$explorer-toolbar-radius: $radius-default;
 $explorer-toolbar-shadow-depth: 1;
 
 $explorer-breadcrumb-height: 38px;
-$explorer-breadcrumb-radius: 8px;
+$explorer-breadcrumb-radius: $radius-default;
 $explorer-breadcrumb-spacing: 12px;
 
-$explorer-view-radius: 8px;
+$explorer-view-radius: $radius-default;

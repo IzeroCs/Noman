@@ -122,7 +122,7 @@
 
     &::-webkit-scrollbar-thumb {
         background: $foreground-color;
-        @include border-radius(4px);
+        @include border-radius(0 $radius-default $radius-default 0);
     }
 
     &::-webkit-scrollbar-track {

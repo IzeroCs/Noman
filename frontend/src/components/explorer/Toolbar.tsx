@@ -15,6 +15,9 @@ const ExplorerToolbar: React.FC<ExplorerToolbarProps &
           <Icon icon="toolbar-view-grid" />
         </button>
       </div>
+      <button type="button" className="explorer-toolbar-button" data-type="sort">
+        <Icon icon="toolbar-button-sort" />
+      </button>
       <div className="explorer-toolbar-search">
         <input type="input" placeholder="Tìm kiếm..." className="explorer-toolbar-search-input" />
       </div>

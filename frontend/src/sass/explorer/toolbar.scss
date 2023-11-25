@@ -9,7 +9,7 @@
 
     &-view {
         flex-direction: column;
-        margin-right: 20px;
+        margin-right: 10px;
 
         @include box-shadow-depth($explorer-toolbar-shadow-depth);
     }
@@ -82,28 +82,36 @@
         margin-left: auto;
 
         &-button {
-            outline: 0;
-            color: $on-suface-color;
-            background-color: $suface-color;
-            border: 1px solid $suface-color;
-            width: $explorer-toolbar-height;
-            height: $explorer-toolbar-height;
             margin-left: 10px;
-            cursor: pointer;
-
-            @include border-radius($explorer-toolbar-radius);
-            @include box-shadow-depth($explorer-toolbar-shadow-depth);
-            @include transition($transition-default filter);
-
-            >svg {
-                width: $explorer-toolbar-icon-size;
-                height: $explorer-toolbar-icon-size;
-                vertical-align: middle;
-            }
-
-            &:hover {
-                @include filter(brightness(150%));
-            }
         }
+    }
+
+    &-action-button,
+    &-button {
+        outline: 0;
+        color: $on-suface-color;
+        background-color: $suface-color;
+        border: 1px solid $suface-color;
+        width: $explorer-toolbar-height;
+        height: $explorer-toolbar-height;
+        cursor: pointer;
+
+        @include border-radius($explorer-toolbar-radius);
+        @include box-shadow-depth($explorer-toolbar-shadow-depth);
+        @include transition($transition-default filter);
+
+        >svg {
+            width: $explorer-toolbar-icon-size;
+            height: $explorer-toolbar-icon-size;
+            vertical-align: middle;
+        }
+
+        &:hover {
+            @include filter(brightness(150%));
+        }
+    }
+
+    &-button {
+        margin-right: 10px;
     }
 }

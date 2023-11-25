@@ -29,37 +29,40 @@ const ExplorerViewList: React.FC<ExplorerViewListProps &
   }
 
   return <div className="explorer-view-list">
-    <div className="explorer-view-list-header-row">
-      {filterColumns.map((col, index) => {
-        return <div key={index} className={classNames("explorer-view-list-header-cell",
-          colSize(col, index))}>{col.label}</div>
-      })}
-    </div>
-
-    <div className="explorer-view-list-body">
-      {fileModels.map((item, index) => {
-        return <div className="explorer-view-list-body-row" key={index}>
-          {filterColumns.map((col, filterIndex) => {
-            const operation = FileAdapter[col.key as keyof typeof FileAdapter]
-            const isDirectory = item.ext === "d"
-            let value = item[col.key as keyof FileModel] as string
-
-            if (typeof operation !== "undefined")
-              value = operation(value)
-
-
-            return <div key={filterIndex} className={classNames("explorer-view-list-body-cell",
-              colSize(col, filterIndex))}>
-              {col.key === "name" && isDirectory &&
-                <span className="icomoon ic-explorer-directory icon-directory"></span>}
-              {col.key === "name" && !isDirectory &&
-                <span className={classNames("icomoon", "ic-explorer-file-" + item.ext.substring(2), "icon-file")}></span>}
-              <span className="label">{value}</span>
-            </div>
+    <table className="explorer-view-list-table">
+      <thead className="explorer-view-list-head">
+        <tr>
+          {filterColumns.map((col, index) => {
+            return <td key={index} className={classNames("explorer-view-list-head-cell",
+              colSize(col, index))}>{col.label}</td>
           })}
-        </div>
-      })}
-    </div>
+        </tr>
+      </thead>
+      <tbody className="explorer-view-list-body">
+        {fileModels.map((item, index) => {
+          return <tr key={index} className="explorer-view-list-body-row">
+            {filterColumns.map((col, filterIndex) => {
+              const operation = FileAdapter[col.key as keyof typeof FileAdapter]
+              const isDirectory = item.ext === "d"
+              let value = item[col.key as keyof FileModel] as string
+
+              if (typeof operation !== "undefined")
+                value = operation(value)
+
+
+              return <td key={filterIndex} className={classNames("explorer-view-list-body-cell",
+                colSize(col, filterIndex))}>
+                {col.key === "name" && isDirectory &&
+                  <span className="icomoon ic-explorer-directory icon-directory"></span>}
+                {col.key === "name" && !isDirectory &&
+                  <span className={classNames("icomoon", "ic-explorer-file-" + item.ext.substring(2), "icon-file")}></span>}
+                <span className="label">{value}</span>
+              </td>
+            })}
+          </tr>
+        })}
+      </tbody>
+    </table>
   </div>
 }
 

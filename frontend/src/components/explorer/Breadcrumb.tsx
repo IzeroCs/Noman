@@ -1,5 +1,4 @@
 import classNames from "classnames"
-import Icon from "../../icon"
 
 type ExplorerBreadcrumbProps = {
   list: Array<string>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import Header from "./include/Header"
 import Main from "./include/Main"
 import ContextMenu from "./include/ContextMenu"
 import Sidebar from "./include/Sidebar"
