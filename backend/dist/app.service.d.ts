@@ -1,3 +1,8 @@
+import { ConfigService } from "@nestjs/config";
+import MongoStore = require("connect-mongo");
 export declare class AppService {
-    getHello(): string;
+    private readonly configService;
+    constructor(configService: ConfigService);
+    getMongoUrl(): string;
+    getMongoStore(): MongoStore;
 }

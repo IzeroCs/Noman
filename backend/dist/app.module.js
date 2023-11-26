@@ -10,14 +10,32 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const mongoose_1 = require("@nestjs/mongoose");
+const users_module_1 = require("./users/users.module");
+const auth_module_1 = require("./auth/auth.module");
+const files_module_1 = require("./files/files.module");
+const config_1 = require("@nestjs/config");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
+        imports: [
+            users_module_1.UsersModule,
+            auth_module_1.AuthModule,
+            files_module_1.FilesModule,
+            config_1.ConfigModule.forRoot({ isGlobal: true }),
+            mongoose_1.MongooseModule.forRootAsync({
+                imports: [AppModule],
+                inject: [app_service_1.AppService],
+                useFactory: async (appService) => ({
+                    uri: appService.getMongoUrl()
+                })
+            })
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
+        exports: [app_service_1.AppService]
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
