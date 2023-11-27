@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FilesController = void 0;
 const fs = require("fs");
 const path = require("path");
-const mime = require("mime-types");
 const common_1 = require("@nestjs/common");
 const files_service_1 = require("./files.service");
 const authenticated_guard_1 = require("../auth/authenticated.guard");
+const mime_1 = require("../core/files/mime");
 let FilesController = class FilesController {
     constructor(filesService) {
         this.filesService = filesService;
@@ -46,9 +46,9 @@ let FilesController = class FilesController {
                     created_date: stat.ctimeMs
                 };
                 if (stat.isFile()) {
-                    const contentType = mime.lookup(item);
-                    const extension = mime.extension(contentType || "");
-                    console.log(contentType);
+                    const mime = mime_1.FilesMime.lookup(item);
+                    info.icon = mime.icon;
+                    info.extension = mime.extension;
                 }
                 return info;
             })

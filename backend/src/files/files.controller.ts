@@ -1,6 +1,5 @@
 import * as fs from "fs"
 import * as path from "path"
-import * as mime from "mime-types"
 import {
   Controller,
   Get,
@@ -11,6 +10,7 @@ import {
 } from "@nestjs/common"
 import { FilesService } from "./files.service"
 import { AuthenticatedGuard } from "src/auth/authenticated.guard"
+import { FilesMime } from "src/core/files/mime"
 
 @UseGuards(AuthenticatedGuard)
 @Controller("files")
@@ -45,9 +45,10 @@ export class FilesController {
           }
 
           if (stat.isFile()) {
-            const contentType = mime.lookup(item)
-            const extension = mime.extension(contentType || "")
-            console.log(contentType)
+            const mime = FilesMime.lookup(item)
+
+            info.icon = mime.icon
+            info.extension = mime.extension
           }
 
           return info

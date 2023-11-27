@@ -4,6 +4,7 @@ import { ConfigService } from "@nestjs/config"
 import { AppService } from "./app.service"
 import * as session from "express-session"
 import * as passport from "passport"
+import { FilesMime } from "./core/files/mime"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
