@@ -5,15 +5,16 @@ import reportWebVitals from "./reportWebVitals"
 import Store from "./store"
 import { Provider } from "react-redux"
 import "./i18next"
+import "./api"
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
+
+root.render(
+  <React.StrictMode>
+    <Provider store={Store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
 )
-
-root.render(<React.StrictMode>
-  <Provider store={Store}>
-    <App />
-  </Provider>
-</React.StrictMode>)
 
 reportWebVitals()

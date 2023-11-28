@@ -3,7 +3,7 @@ export declare class FilesController {
     private readonly filesService;
     constructor(filesService: FilesService);
     scan(pathScan: any): Promise<{
-        msg: string;
+        message: string;
         list: any[];
     }>;
 }

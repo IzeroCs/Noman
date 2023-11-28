@@ -27,23 +27,25 @@ let UsersController = class UsersController {
         const hashedPassword = await bcrypt.hash(password, saltOrRounds);
         const result = await this.usersService.inserUser(username, hashedPassword);
         return {
-            msg: "User successfully registered",
+            message: "User successfully registered",
             userid: result.id,
-            username: result.username,
+            username: result.username
         };
     }
     signin(req) {
         return {
             User: req.user,
-            msg: "You are successfully logged in",
+            message: "You are successfully logged in"
         };
     }
     getHello(req) {
-        return req.user;
+        return new Promise((resolve) => {
+            setTimeout(() => resolve(req.user), 500);
+        });
     }
     signout(req) {
         req.session.destroy();
-        return { msg: "The user session has ended" };
+        return { message: "The user session has ended" };
     }
 };
 exports.UsersController = UsersController;
@@ -69,7 +71,7 @@ __decorate([
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", Object)
 ], UsersController.prototype, "getHello", null);
 __decorate([
     (0, common_1.Get)("/signout"),

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?eni4d1');
-  src:  url('fonts/icomoon.eot?eni4d1#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?eni4d1') format('truetype'),
-    url('fonts/icomoon.woff?eni4d1') format('woff'),
-    url('fonts/icomoon.svg?eni4d1#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?7uf4ht');
+  src:  url('fonts/icomoon.eot?7uf4ht#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?7uf4ht') format('truetype'),
+    url('fonts/icomoon.woff?7uf4ht') format('woff'),
+    url('fonts/icomoon.svg?7uf4ht#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,20 +25,62 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ic-explorer-file-image:before {
+  content: "\e914";
+}
+.ic-explorer-file-document .path1:before {
+  content: "\e917";
+  color: rgb(35, 31, 32);
+}
+.ic-explorer-file-document .path2:before {
+  content: "\e91c";
+  margin-left: -1em;
+  color: rgb(35, 31, 32);
+  opacity: 0.5;
+}
+.ic-explorer-file-document .path3:before {
+  content: "\e91d";
+  margin-left: -1em;
+  color: rgb(35, 31, 32);
+  opacity: 0.5;
+}
+.ic-explorer-file-document .path4:before {
+  content: "\e91e";
+  margin-left: -1em;
+  color: rgb(35, 31, 32);
+  opacity: 0.7;
+}
+.ic-explorer-file-document .path5:before {
+  content: "\e91f";
+  margin-left: -1em;
+  color: rgb(35, 31, 32);
+}
+.ic-explorer-file-document .path6:before {
+  content: "\e920";
+  margin-left: -1em;
+  color: rgb(35, 31, 32);
+  opacity: 0.4;
+}
+.ic-explorer-file-code:before {
+  content: "\e921";
+}
+.ic-explorer-file-audio:before {
+  content: "\e922";
+}
+.ic-auth-password:before {
+  content: "\e91a";
+}
+.ic-auth-user:before {
+  content: "\e91b";
+}
 .ic-toolbar-button-sort:before {
   content: "\e919";
-}
-.ic-explorer-file-music:before {
-  content: "\e917";
 }
 .ic-explorer-file-video:before {
   content: "\e918";
 }
 .ic-explorer-file-archive:before {
   content: "\e913";
-}
-.ic-explorer-file-picture:before {
-  content: "\e914";
 }
 .ic-explorer-file-text:before {
   content: "\e915";

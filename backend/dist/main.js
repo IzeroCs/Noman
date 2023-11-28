@@ -7,7 +7,7 @@ const app_service_1 = require("./app.service");
 const session = require("express-session");
 const passport = require("passport");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
     const configService = app.get(config_1.ConfigService);
     const appService = app.get(app_service_1.AppService);
     app.use(session({

@@ -11,16 +11,16 @@ export class UsersController {
   @Post("/signup")
   async signup(
     @Body("password") password: string,
-    @Body("username") username: string,
+    @Body("username") username: string
   ) {
     const saltOrRounds = 10
     const hashedPassword = await bcrypt.hash(password, saltOrRounds)
     const result = await this.usersService.inserUser(username, hashedPassword)
 
     return {
-      msg: "User successfully registered",
+      message: "User successfully registered",
       userid: result.id,
-      username: result.username,
+      username: result.username
     }
   }
 
@@ -29,19 +29,21 @@ export class UsersController {
   signin(@Request() req): any {
     return {
       User: req.user,
-      msg: "You are successfully logged in",
+      message: "You are successfully logged in"
     }
   }
 
   @UseGuards(AuthenticatedGuard)
   @Get("/protected")
-  getHello(@Request() req): string {
-    return req.user
+  getHello(@Request() req): any {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(req.user), 500)
+    })
   }
 
   @Get("/signout")
   signout(@Request() req): any {
     req.session.destroy()
-    return { msg: "The user session has ended" }
+    return { message: "The user session has ended" }
   }
 }

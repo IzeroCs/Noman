@@ -1,0 +1,89 @@
+.signin-wrapper {
+    display: inline-block;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    @include translate(-50%, -50%);
+}
+
+.signin-banner {
+    color: #fff;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.signin-row {
+    height: 50px;
+    position: relative;
+    margin-bottom: 30px;
+    text-align: center;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.signin-icon {
+    display: inline-block;
+    color: darken($primary-color, 5%);
+    background-color: $suface-color;
+    font-size: 1.4em;
+    font-weight: bold;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+
+    @include border-radius(15px);
+    @include box-shadow-depth(4);
+
+    &::before {
+        line-height: 50px;
+    }
+}
+
+.signin-input {
+    color: $on-suface-color;
+    background-color: $suface-color;
+    font-size: 0.95em;
+    border: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0 10px;
+    padding-left: 45px;
+    padding-right: 20px;
+    margin-left: 20px;
+    outline: 0;
+
+    @include box-sizing(border-box);
+    @include border-radius(0 15px 15px 0);
+    @include box-shadow-depth(1);
+
+    -webkit-text-fill-color: $on-suface-color;
+}
+
+.signin-button {
+    color: $on-suface-color;
+    cursor: pointer;
+    background-color: darken($primary-color, 15%);
+    border: 0;
+    font-size: 0.95em;
+    font-weight: bold;
+    width: 100%;
+    outline: 0;
+    height: 45px;
+
+    @include border-radius(15px);
+    @include box-shadow-depth(4);
+    @include transition($transition-default width);
+
+    &.logging {
+        width: 50px;
+        cursor: default;
+        pointer-events: none;
+    }
+}

@@ -1,4 +1,4 @@
 import { CanActivate, ExecutionContext } from "@nestjs/common";
 export declare class AuthenticatedGuard implements CanActivate {
-    canActivate(context: ExecutionContext): Promise<any>;
+    canActivate(context: ExecutionContext): Promise<boolean>;
 }

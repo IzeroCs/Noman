@@ -8,7 +8,6 @@
 @import "./icomoon/style.scss";
 
 body {
-    font-family: 'Nunito', sans-serif;
     background-color: $bg-color;
     font-size: 16px;
     font-weight: 100;
@@ -17,12 +16,27 @@ body {
     overflow: hidden;
 }
 
+body,
+html * {
+    font-family: 'Nunito', sans-serif;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    color: red;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 .wrapper {
     background-color: transparent;
 }
 
+@import "./include/splash.scss";
 @import "./include/header.scss";
 @import "./include/main.scss";
 @import "./include/sidebar.scss";
 @import "./include/content.scss";
+@import "./auth/style.scss";
 @import "./explorer/style.scss";

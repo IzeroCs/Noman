@@ -7,7 +7,7 @@ import * as passport from "passport"
 import { FilesMime } from "./core/files/mime"
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, { cors: true })
   const configService = app.get(ConfigService)
   const appService = app.get(AppService)
 

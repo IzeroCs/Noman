@@ -32,7 +32,7 @@ let FilesController = class FilesController {
             return path.resolve(path.join(resolvePath, item));
         };
         return {
-            msg: "Scan directory successfully",
+            message: "Scan directory successfully",
             list: list
                 .filter((item) => {
                 return fs.existsSync(resolveItemPath(item));
@@ -42,8 +42,10 @@ let FilesController = class FilesController {
                 const info = {
                     name: item,
                     size: stat.size,
-                    isDirectory: stat.isDirectory(),
-                    created_date: stat.ctimeMs
+                    mode: stat.mode,
+                    is_directory: stat.isDirectory(),
+                    created_time: stat.ctimeMs,
+                    modified_time: stat.mtimeMs
                 };
                 if (stat.isFile()) {
                     const mime = mime_1.FilesMime.lookup(item);

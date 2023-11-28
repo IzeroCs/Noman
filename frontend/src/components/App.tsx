@@ -1,5 +1,7 @@
+import useAxios from "axios-hooks"
 import React, { useState, useEffect } from "react"
 import Main from "./include/Main"
+import Auth from "./auth"
 import ContextMenu from "./include/ContextMenu"
 import Sidebar from "./include/Sidebar"
 import Content from "./include/Content"
@@ -7,15 +9,21 @@ import TreeView from "./view/TreeView"
 import Explorer from "./explorer"
 
 import "../sass/app.scss"
+import Splash from "./include/Splash"
 
 const App: React.FC = () => {
-  const [windowHeight, setWindowHeight] = useState(document
-    .documentElement.clientHeight)
+  const [{ response, loading, error }] = useAxios({
+    url: "/users/protected",
+    method: "GET"
+  })
 
-  const dispatchResize = () => setWindowHeight(document
-    .documentElement.clientHeight)
-  const dispatchContextMenu = (e: any) =>
-    e.preventDefault()
+  const [windowHeight, setWindowHeight] = useState(
+    document.documentElement.clientHeight
+  )
+
+  const dispatchResize = () =>
+    setWindowHeight(document.documentElement.clientHeight)
+  const dispatchContextMenu = (e: any) => e.preventDefault()
 
   useEffect(() => {
     window.addEventListener("resize", dispatchResize)
@@ -27,21 +35,29 @@ const App: React.FC = () => {
     }
   })
 
-  return <div style={{
-    height: windowHeight + "px"
-  }}>
-    <div className="wrapper">
-      <Main>
-        <Sidebar>
-          <TreeView />
-        </Sidebar>
-        <Content>
-          <Explorer />
-        </Content>
-      </Main>
-      <ContextMenu />
+  return (
+    <div
+      style={{
+        height: windowHeight + "px"
+      }}
+    >
+      <div className="wrapper">
+        {!loading && !error && (
+          <Main>
+            <Sidebar>
+              <TreeView />
+            </Sidebar>
+            <Content>
+              <Explorer />
+            </Content>
+            <ContextMenu />
+          </Main>
+        )}
+        {!loading && error && <Auth />}
+        {loading && <Splash />}
+      </div>
     </div>
-  </div>
+  )
 }
 
 export default App

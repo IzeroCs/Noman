@@ -30,7 +30,7 @@ export class FilesController {
     }
 
     return {
-      msg: "Scan directory successfully",
+      message: "Scan directory successfully",
       list: list
         .filter((item) => {
           return fs.existsSync(resolveItemPath(item))
@@ -40,8 +40,10 @@ export class FilesController {
           const info: any = {
             name: item,
             size: stat.size,
-            isDirectory: stat.isDirectory(),
-            created_date: stat.ctimeMs
+            mode: stat.mode,
+            is_directory: stat.isDirectory(),
+            created_time: stat.ctimeMs,
+            modified_time: stat.mtimeMs
           }
 
           if (stat.isFile()) {
