@@ -15,11 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
-const bcrypt = require("bcrypt");
 const local_auth_guard_1 = require("../auth/local.auth.guard");
-const authenticated_guard_1 = require("../auth/authenticated.guard");
+const auth_service_1 = require("../auth/auth.service");
+const bcrypt = require("bcrypt");
+const jwt_auth_guard_1 = require("../auth/jwt.auth.guard");
 let UsersController = class UsersController {
-    constructor(usersService) {
+    constructor(authService, usersService) {
+        this.authService = authService;
         this.usersService = usersService;
     }
     async signup(password, username) {
@@ -32,19 +34,13 @@ let UsersController = class UsersController {
             username: result.username
         };
     }
-    signin(req) {
-        return {
-            User: req.user,
-            message: "You are successfully logged in"
-        };
+    async signin(req) {
+        return this.authService.signin(req.user);
     }
     getHello(req) {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(req.user), 500);
-        });
+        return req.user;
     }
     signout(req) {
-        req.session.destroy();
         return { message: "The user session has ended" };
     }
 };
@@ -63,10 +59,10 @@ __decorate([
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "signin", null);
 __decorate([
-    (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)("/protected"),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -82,6 +78,7 @@ __decorate([
 ], UsersController.prototype, "signout", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)("users"),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService,
+        users_service_1.UsersService])
 ], UsersController);
 //# sourceMappingURL=users.controller.js.map

@@ -1,12 +1,16 @@
 import { Body, Controller, Post, Get, Request, UseGuards } from "@nestjs/common"
 import { UsersService } from "./users.service"
-import * as bcrypt from "bcrypt"
 import { LocalAuthGuard } from "src/auth/local.auth.guard"
-import { AuthenticatedGuard } from "src/auth/authenticated.guard"
+import { AuthService } from "src/auth/auth.service"
+import * as bcrypt from "bcrypt"
+import { JwtAuthGuard } from "src/auth/jwt.auth.guard"
 
 @Controller("users")
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService
+  ) {}
 
   @Post("/signup")
   async signup(
@@ -26,24 +30,18 @@ export class UsersController {
 
   @UseGuards(LocalAuthGuard)
   @Post("/signin")
-  signin(@Request() req): any {
-    return {
-      User: req.user,
-      message: "You are successfully logged in"
-    }
+  async signin(@Request() req) {
+    return this.authService.signin(req.user)
   }
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("/protected")
   getHello(@Request() req): any {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(req.user), 500)
-    })
+    return req.user
   }
 
   @Get("/signout")
   signout(@Request() req): any {
-    req.session.destroy()
     return { message: "The user session has ended" }
   }
 }

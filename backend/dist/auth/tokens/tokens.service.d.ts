@@ -22,23 +22,10 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
+import { Token } from "../tokens.model";
 import { Model } from "mongoose";
-import { User } from "./users.model";
-import { Token } from "./tokens.model";
-export declare class UsersService {
-    private readonly userModel;
+export declare class TokensService {
     private readonly tokenModel;
-    constructor(userModel: Model<User>, tokenModel: Model<Token>);
-    inserUser(username: string, password: string): Promise<import("mongoose").Document<unknown, {}, User> & User & Required<{
-        _id: string;
-    }>>;
-    findById(id: string): Promise<import("mongoose").Document<unknown, {}, User> & User & Required<{
-        _id: string;
-    }>>;
-    getUser(username: string): Promise<import("mongoose").Document<unknown, {}, User> & User & Required<{
-        _id: string;
-    }>>;
-    saveToken(userid: string, accessToken: string): Promise<import("mongoose").Document<unknown, {}, Token> & Token & Required<{
-        _id: string;
-    }>>;
+    constructor(tokenModel: Model<Token>);
+    create(userid: string, token: string): Promise<void>;
 }

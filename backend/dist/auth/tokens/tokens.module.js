@@ -6,27 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersModule = void 0;
+exports.TokensModule = void 0;
 const common_1 = require("@nestjs/common");
-const users_service_1 = require("./users.service");
-const users_controller_1 = require("./users.controller");
+const tokens_service_1 = require("./tokens.service");
 const mongoose_1 = require("@nestjs/mongoose");
-const users_model_1 = require("./users.model");
-const jwt_1 = require("@nestjs/jwt");
-const auth_service_1 = require("../auth/auth.service");
-const tokens_model_1 = require("./tokens.model");
-let UsersModule = class UsersModule {
+const tokens_model_1 = require("../tokens.model");
+let TokensModule = class TokensModule {
 };
-exports.UsersModule = UsersModule;
-exports.UsersModule = UsersModule = __decorate([
+exports.TokensModule = TokensModule;
+exports.TokensModule = TokensModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: "user", schema: users_model_1.UserSchema }]),
             mongoose_1.MongooseModule.forFeature([{ name: "token", schema: tokens_model_1.TokenSchema }])
         ],
-        providers: [auth_service_1.AuthService, users_service_1.UsersService, jwt_1.JwtService],
-        controllers: [users_controller_1.UsersController],
-        exports: [users_service_1.UsersService]
+        providers: [tokens_service_1.TokensService],
+        exports: [tokens_service_1.TokensService]
     })
-], UsersModule);
-//# sourceMappingURL=users.module.js.map
+], TokensModule);
+//# sourceMappingURL=tokens.module.js.map

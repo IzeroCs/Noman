@@ -1,27 +1,14 @@
 import { NestFactory } from "@nestjs/core"
 import { AppModule } from "./app.module"
-import { ConfigService } from "@nestjs/config"
-import { AppService } from "./app.service"
-import * as session from "express-session"
-import * as passport from "passport"
-import { FilesMime } from "./core/files/mime"
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true })
-  const configService = app.get(ConfigService)
-  const appService = app.get(AppService)
+  const app = await NestFactory.create(AppModule)
 
-  app.use(
-    session({
-      store: appService.getMongoStore(),
-      secret: configService.get("SESSION_SECRET") || "session-noman-secret",
-      resave: false,
-      saveUninitialized: false
-    })
-  )
+  app.enableCors({
+    origin: "http://localhost:8080",
+    credentials: true
+  })
 
-  app.use(passport.initialize())
-  app.use(passport.session())
   await app.listen(3030)
 }
 bootstrap()

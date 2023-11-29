@@ -11,16 +11,7 @@ const common_1 = require("@nestjs/common");
 let AuthenticatedGuard = class AuthenticatedGuard {
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (!request.isAuthenticated()) {
-                    reject(new common_1.UnauthorizedException());
-                }
-                else {
-                    resolve(true);
-                }
-            }, 500);
-        });
+        return request.isAuthenticated();
     }
 };
 exports.AuthenticatedGuard = AuthenticatedGuard;

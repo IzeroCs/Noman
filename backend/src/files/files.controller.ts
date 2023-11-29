@@ -9,10 +9,8 @@ import {
   NotFoundException
 } from "@nestjs/common"
 import { FilesService } from "./files.service"
-import { AuthenticatedGuard } from "src/auth/authenticated.guard"
 import { FilesMime } from "src/core/files/mime"
 
-@UseGuards(AuthenticatedGuard)
 @Controller("files")
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}

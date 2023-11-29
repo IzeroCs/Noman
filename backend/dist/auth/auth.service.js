@@ -13,9 +13,13 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("../users/users.service");
 const bcrypt = require("bcrypt");
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
 let AuthService = class AuthService {
-    constructor(usersService) {
+    constructor(usersService, configService, jwtService) {
         this.usersService = usersService;
+        this.configService = configService;
+        this.jwtService = jwtService;
     }
     async validateUser(username, password) {
         const user = await this.usersService.getUser(username);
@@ -26,15 +30,31 @@ let AuthService = class AuthService {
         if (user && passwordValid) {
             return {
                 userid: user.id,
-                username: user.username,
+                username: user.username
             };
         }
         return null;
+    }
+    async signin(user) {
+        const payload = {
+            username: user.username,
+            userid: user.userid
+        };
+        const accessToken = this.jwtService.sign(payload, {
+            secret: this.configService.get("JWT_SECRET")
+        });
+        const saveToken = await this.usersService.saveToken(user.userid, accessToken);
+        if (!saveToken) {
+            throw new common_1.UnauthorizedException();
+        }
+        return { accessToken };
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
+    __metadata("design:paramtypes", [users_service_1.UsersService,
+        config_1.ConfigService,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

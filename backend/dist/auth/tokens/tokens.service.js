@@ -12,38 +12,20 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersService = void 0;
+exports.TokensService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-let UsersService = class UsersService {
-    constructor(userModel, tokenModel) {
-        this.userModel = userModel;
+let TokensService = class TokensService {
+    constructor(tokenModel) {
         this.tokenModel = tokenModel;
     }
-    async inserUser(username, password) {
-        const user = new this.userModel({ username, password });
-        return await user.save();
-    }
-    async findById(id) {
-        return await this.userModel.findById(id).limit(1);
-    }
-    async getUser(username) {
-        return await this.userModel.findOne({
-            username: { $regex: `^${username}$`, $options: "i" }
-        });
-    }
-    async saveToken(userid, accessToken) {
-        const token = new this.tokenModel({ access: accessToken, userid: userid });
-        return await token.save();
-    }
+    async create(userid, token) { }
 };
-exports.UsersService = UsersService;
-exports.UsersService = UsersService = __decorate([
+exports.TokensService = TokensService;
+exports.TokensService = TokensService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)("user")),
-    __param(1, (0, mongoose_1.InjectModel)("token")),
-    __metadata("design:paramtypes", [mongoose_2.Model,
-        mongoose_2.Model])
-], UsersService);
-//# sourceMappingURL=users.service.js.map
+    __param(0, (0, mongoose_1.InjectModel)("token")),
+    __metadata("design:paramtypes", [mongoose_2.Model])
+], TokensService);
+//# sourceMappingURL=tokens.service.js.map

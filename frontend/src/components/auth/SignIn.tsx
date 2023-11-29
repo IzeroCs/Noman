@@ -12,7 +12,8 @@ const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (
   const [{ data, response, loading, error }, axiosExec] = useAxios(
     {
       url: "/users/signin",
-      method: "POST"
+      method: "POST",
+      withCredentials: true
     },
     { manual: true }
   )

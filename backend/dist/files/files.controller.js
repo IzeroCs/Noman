@@ -17,7 +17,6 @@ const fs = require("fs");
 const path = require("path");
 const common_1 = require("@nestjs/common");
 const files_service_1 = require("./files.service");
-const authenticated_guard_1 = require("../auth/authenticated.guard");
 const mime_1 = require("../core/files/mime");
 let FilesController = class FilesController {
     constructor(filesService) {
@@ -66,7 +65,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], FilesController.prototype, "scan", null);
 exports.FilesController = FilesController = __decorate([
-    (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
     (0, common_1.Controller)("files"),
     __metadata("design:paramtypes", [files_service_1.FilesService])
 ], FilesController);
