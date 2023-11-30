@@ -1,23 +1,19 @@
-import * as mongoose from "mongoose"
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
+import mongoose, { Document, SchemaTypes } from "mongoose"
+import { User } from "./users.model"
 
-export const TokenSchema = new mongoose.Schema(
-  {
-    access: {
-      type: String,
-      required: true,
-      unique: true
-    },
+export type TokenDocument = Token & Document
 
-    userid: {
-      type: mongoose.Types.ObjectId,
-      required: true
-    }
-  },
-  { timestamps: true }
-)
-
-export interface Token extends mongoose.Document {
-  _id: string
-  access: string
+@Schema()
+export class Token {
+  @Prop({ required: true, type: SchemaTypes.ObjectId, ref: User.name })
   userid: mongoose.Types.ObjectId
+
+  @Prop({ required: true, unique: true })
+  access: string
+
+  @Prop({ required: true, unique: true })
+  refresh: string
 }
+
+export const TokenSchema = SchemaFactory.createForClass(Token)

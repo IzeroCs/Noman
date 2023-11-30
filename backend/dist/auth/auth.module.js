@@ -29,13 +29,18 @@ exports.AuthModule = AuthModule = __decorate([
                 inject: [config_1.ConfigService],
                 useFactory: async (configService) => {
                     return {
-                        secret: configService.get("JWT_SECRET"),
-                        signOptions: { expiresIn: "14d" }
+                        secret: configService.get("JWT_SECRET") || jwt_strategy_1.JwtConstraints.JWT_SECRET_DEFAULT
                     };
                 }
             })
         ],
-        providers: [auth_service_1.AuthService, config_1.ConfigService, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy]
+        providers: [
+            auth_service_1.AuthService,
+            config_1.ConfigService,
+            local_strategy_1.LocalStrategy,
+            jwt_strategy_1.AccessTokenStrategy,
+            jwt_strategy_1.RefreshTokenStrategy
+        ]
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

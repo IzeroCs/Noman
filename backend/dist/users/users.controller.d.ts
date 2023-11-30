@@ -1,17 +1,16 @@
-import { UsersService } from "./users.service";
 import { AuthService } from "src/auth/auth.service";
 export declare class UsersController {
     private readonly authService;
-    private readonly usersService;
-    constructor(authService: AuthService, usersService: UsersService);
-    signup(password: string, username: string): Promise<{
+    constructor(authService: AuthService);
+    signup(username: string, password: string): Promise<{
         message: string;
         userid: any;
-        username: string;
     }>;
     signin(req: any): Promise<{
         accessToken: string;
+        refreshToken: string;
     }>;
-    getHello(req: any): any;
     signout(req: any): any;
+    refresh(req: any): any;
+    profile(req: any): any;
 }

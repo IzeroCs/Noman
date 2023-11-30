@@ -23,22 +23,34 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Model } from "mongoose";
-import { User } from "./users.model";
-import { Token } from "./tokens.model";
+import { User, UserDocument } from "./users.model";
+import { Token, TokenDocument } from "./tokens.model";
 export declare class UsersService {
     private readonly userModel;
     private readonly tokenModel;
-    constructor(userModel: Model<User>, tokenModel: Model<Token>);
-    inserUser(username: string, password: string): Promise<import("mongoose").Document<unknown, {}, User> & User & Required<{
-        _id: string;
-    }>>;
-    findById(id: string): Promise<import("mongoose").Document<unknown, {}, User> & User & Required<{
-        _id: string;
-    }>>;
-    getUser(username: string): Promise<import("mongoose").Document<unknown, {}, User> & User & Required<{
-        _id: string;
-    }>>;
-    saveToken(userid: string, accessToken: string): Promise<import("mongoose").Document<unknown, {}, Token> & Token & Required<{
-        _id: string;
-    }>>;
+    constructor(userModel: Model<UserDocument>, tokenModel: Model<TokenDocument>);
+    inserUser(username: string, password: string): Promise<import("mongoose").Document<unknown, {}, UserDocument> & User & import("mongoose").Document<any, any, any> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    findUserById(id: string): Promise<import("mongoose").Document<unknown, {}, UserDocument> & User & import("mongoose").Document<any, any, any> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    getUser(username: string): Promise<import("mongoose").Document<unknown, {}, UserDocument> & User & import("mongoose").Document<any, any, any> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    putToken(userid: string, accessToken: string, refreshToken: string): Promise<import("mongoose").Document<unknown, {}, TokenDocument> & Token & import("mongoose").Document<any, any, any> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    removeToken(userid: string, accessToken: string): Promise<import("mongoose").Document<unknown, {}, TokenDocument> & Token & import("mongoose").Document<any, any, any> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    updateToken(userid: string, accessToken: string, refreshTokenOld: string, refreshTokenNew: string): Promise<import("mongoose").Document<unknown, {}, TokenDocument> & Token & import("mongoose").Document<any, any, any> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    findAccessToken(userid: string, accessToken: string): Promise<import("mongoose").Document<unknown, {}, TokenDocument> & Token & import("mongoose").Document<any, any, any> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    findRefreshToken(userid: string, refreshToken: string): Promise<import("mongoose").Document<unknown, {}, TokenDocument> & Token & import("mongoose").Document<any, any, any> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
 }

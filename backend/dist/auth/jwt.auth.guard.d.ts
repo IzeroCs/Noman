@@ -1,7 +1,18 @@
-import { ExecutionContext } from "@nestjs/common";
-declare const JwtAuthGuard_base: import("@nestjs/passport").Type<import("@nestjs/passport").IAuthGuard>;
-export declare class JwtAuthGuard extends JwtAuthGuard_base {
-    canActivate(context: ExecutionContext): boolean | Promise<boolean> | import("rxjs").Observable<boolean>;
-    handleRequest(err: any, user: any, info: any): any;
+import { AccessTokenValidate, RefreshTokenValidate } from "./jwt.strategy";
+export type AccessTokenPayloadHandle = {
+    userid: string;
+    accessToken: string;
+};
+export type RefreshTokenPayloadHandle = {
+    userid: string;
+    refreshToken: string;
+};
+declare const AccessTokenGuard_base: import("@nestjs/passport").Type<import("@nestjs/passport").IAuthGuard>;
+export declare class AccessTokenGuard extends AccessTokenGuard_base {
+    handleRequest(err: any, data: AccessTokenValidate): any | AccessTokenPayloadHandle;
+}
+declare const RefreshTokenGuard_base: import("@nestjs/passport").Type<import("@nestjs/passport").IAuthGuard>;
+export declare class RefreshTokenGuard extends RefreshTokenGuard_base {
+    handleRequest(err: any, data: RefreshTokenValidate): any | RefreshTokenPayloadHandle;
 }
 export {};

@@ -21,8 +21,8 @@ exports.UsersModule = UsersModule;
 exports.UsersModule = UsersModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: "user", schema: users_model_1.UserSchema }]),
-            mongoose_1.MongooseModule.forFeature([{ name: "token", schema: tokens_model_1.TokenSchema }])
+            mongoose_1.MongooseModule.forFeature([{ name: users_model_1.User.name, schema: users_model_1.UserSchema }]),
+            mongoose_1.MongooseModule.forFeature([{ name: tokens_model_1.Token.name, schema: tokens_model_1.TokenSchema }])
         ],
         providers: [auth_service_1.AuthService, users_service_1.UsersService, jwt_1.JwtService],
         controllers: [users_controller_1.UsersController],

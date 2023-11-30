@@ -6,23 +6,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtAuthGuard = void 0;
+exports.RefreshTokenGuard = exports.AccessTokenGuard = void 0;
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
-let JwtAuthGuard = class JwtAuthGuard extends (0, passport_1.AuthGuard)("jwt") {
-    canActivate(context) {
-        return super.canActivate(context);
-    }
-    handleRequest(err, user, info) {
-        console.log("handle", user);
-        if (err || !user) {
+let AccessTokenGuard = class AccessTokenGuard extends (0, passport_1.AuthGuard)("jwt") {
+    handleRequest(err, data) {
+        if (err || !data) {
             throw err || new common_1.UnauthorizedException();
         }
-        return { username: user.username, userid: user._id };
+        return {
+            userid: data.userid,
+            accessToken: data.accessToken
+        };
     }
 };
-exports.JwtAuthGuard = JwtAuthGuard;
-exports.JwtAuthGuard = JwtAuthGuard = __decorate([
+exports.AccessTokenGuard = AccessTokenGuard;
+exports.AccessTokenGuard = AccessTokenGuard = __decorate([
     (0, common_1.Injectable)()
-], JwtAuthGuard);
+], AccessTokenGuard);
+let RefreshTokenGuard = class RefreshTokenGuard extends (0, passport_1.AuthGuard)("jwt-refresh") {
+    handleRequest(err, data) {
+        if (err || !data) {
+            throw err || new common_1.UnauthorizedException();
+        }
+        return { userid: data.userid, refreshToken: data.refreshToken };
+    }
+};
+exports.RefreshTokenGuard = RefreshTokenGuard;
+exports.RefreshTokenGuard = RefreshTokenGuard = __decorate([
+    (0, common_1.Injectable)()
+], RefreshTokenGuard);
 //# sourceMappingURL=jwt.auth.guard.js.map

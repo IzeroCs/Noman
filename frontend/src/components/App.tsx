@@ -12,8 +12,8 @@ import "../sass/app.scss"
 import Splash from "./include/Splash"
 
 const App: React.FC = () => {
-  const [{ response, loading, error }] = useAxios({
-    url: "/users/protected",
+  const [{ loading, error }, refetch] = useAxios({
+    url: "/users/profile",
     method: "GET"
   })
 
@@ -24,6 +24,10 @@ const App: React.FC = () => {
   const dispatchResize = () =>
     setWindowHeight(document.documentElement.clientHeight)
   const dispatchContextMenu = (e: any) => e.preventDefault()
+
+  const onRefetch = (): any => {
+    refetch()
+  }
 
   useEffect(() => {
     window.addEventListener("resize", dispatchResize)
@@ -53,7 +57,7 @@ const App: React.FC = () => {
             <ContextMenu />
           </Main>
         )}
-        {!loading && error && <Auth />}
+        {!loading && error && <Auth onRefetch={onRefetch} />}
         {loading && <Splash />}
       </div>
     </div>

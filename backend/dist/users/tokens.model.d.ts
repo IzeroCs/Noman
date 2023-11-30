@@ -22,56 +22,15 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import * as mongoose from "mongoose";
-export declare const TokenSchema: mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any>, {}, {}, {}, {}, {
-    timestamps: true;
-}, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import mongoose, { Document } from "mongoose";
+export type TokenDocument = Token & Document;
+export declare class Token {
+    userid: mongoose.Types.ObjectId;
     access: string;
-    userid: {
-        prototype?: mongoose.Types.ObjectId;
-        cacheHexString?: unknown;
-        generate?: {};
-        createFromTime?: {};
-        createFromHexString?: {};
-        createFromBase64?: {};
-        isValid?: {};
-    };
-}, mongoose.Document<unknown, {}, mongoose.FlatRecord<{
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    access: string;
-    userid: {
-        prototype?: mongoose.Types.ObjectId;
-        cacheHexString?: unknown;
-        generate?: {};
-        createFromTime?: {};
-        createFromHexString?: {};
-        createFromBase64?: {};
-        isValid?: {};
-    };
-}>> & mongoose.FlatRecord<{
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    access: string;
-    userid: {
-        prototype?: mongoose.Types.ObjectId;
-        cacheHexString?: unknown;
-        generate?: {};
-        createFromTime?: {};
-        createFromHexString?: {};
-        createFromBase64?: {};
-        isValid?: {};
-    };
-}> & {
+    refresh: string;
+}
+export declare const TokenSchema: mongoose.Schema<Token, mongoose.Model<Token, any, any, any, mongoose.Document<unknown, any, Token> & Token & {
+    _id: mongoose.Types.ObjectId;
+}, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, Token, mongoose.Document<unknown, {}, mongoose.FlatRecord<Token>> & mongoose.FlatRecord<Token> & {
     _id: mongoose.Types.ObjectId;
 }>;
-export interface Token extends mongoose.Document {
-    _id: string;
-    access: string;
-    userid: mongoose.Types.ObjectId;
-}

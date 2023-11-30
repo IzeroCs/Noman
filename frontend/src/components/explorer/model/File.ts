@@ -16,12 +16,13 @@ export const FileAdapter = {
   },
 
   created_date(timestamp: string): string {
-    return moment((parseInt(timestamp) || 0) * 1000).format("DD/MM/YYYY hh:mm:ss")
+    return moment((parseInt(timestamp) || 0) * 1000).format(
+      "DD/MM/YYYY hh:mm:ss"
+    )
   },
 
   ext(ext: string): string {
-    if (ext === "d")
-      return i18next.t("explorer:file.ext_directory")
+    if (ext === "d") return i18next.t("explorer:file.ext_directory")
     else if (ext.startsWith("f:"))
       return i18next.t("explorer:file.ext_" + ext.substring(2))
 

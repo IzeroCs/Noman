@@ -1,31 +1,18 @@
 import { Body, Controller, Post, Get, Request, UseGuards } from "@nestjs/common"
-import { UsersService } from "./users.service"
 import { LocalAuthGuard } from "src/auth/local.auth.guard"
 import { AuthService } from "src/auth/auth.service"
-import * as bcrypt from "bcrypt"
-import { JwtAuthGuard } from "src/auth/jwt.auth.guard"
+import { AccessTokenGuard, RefreshTokenGuard } from "src/auth/jwt.auth.guard"
 
 @Controller("users")
 export class UsersController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly usersService: UsersService
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post("/signup")
   async signup(
-    @Body("password") password: string,
-    @Body("username") username: string
+    @Body("username") username: string,
+    @Body("password") password: string
   ) {
-    const saltOrRounds = 10
-    const hashedPassword = await bcrypt.hash(password, saltOrRounds)
-    const result = await this.usersService.inserUser(username, hashedPassword)
-
-    return {
-      message: "User successfully registered",
-      userid: result.id,
-      username: result.username
-    }
+    return this.authService.signup(username, password)
   }
 
   @UseGuards(LocalAuthGuard)
@@ -34,14 +21,21 @@ export class UsersController {
     return this.authService.signin(req.user)
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get("/protected")
-  getHello(@Request() req): any {
-    return req.user
-  }
-
+  @UseGuards(AccessTokenGuard)
   @Get("/signout")
   signout(@Request() req): any {
-    return { message: "The user session has ended" }
+    return this.authService.signout(req, req.user)
+  }
+
+  @UseGuards(RefreshTokenGuard)
+  @Get("/refresh")
+  refresh(@Request() req): any {
+    return this.authService.refresh(req, req.user)
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @Get("/profile")
+  profile(@Request() req): any {
+    return this.authService.profile(req.user)
   }
 }

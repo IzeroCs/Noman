@@ -16,6 +16,8 @@ exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const users_model_1 = require("./users.model");
+const tokens_model_1 = require("./tokens.model");
 let UsersService = class UsersService {
     constructor(userModel, tokenModel) {
         this.userModel = userModel;
@@ -25,24 +27,54 @@ let UsersService = class UsersService {
         const user = new this.userModel({ username, password });
         return await user.save();
     }
-    async findById(id) {
-        return await this.userModel.findById(id).limit(1);
+    async findUserById(id) {
+        return await this.userModel.findById(id);
     }
     async getUser(username) {
         return await this.userModel.findOne({
             username: { $regex: `^${username}$`, $options: "i" }
         });
     }
-    async saveToken(userid, accessToken) {
-        const token = new this.tokenModel({ access: accessToken, userid: userid });
+    async putToken(userid, accessToken, refreshToken) {
+        const token = new this.tokenModel({
+            userid,
+            access: accessToken,
+            refresh: refreshToken
+        });
         return await token.save();
+    }
+    async removeToken(userid, accessToken) {
+        return await this.tokenModel.findOneAndDelete({
+            userid,
+            access: accessToken
+        }, { limit: 1 });
+    }
+    async updateToken(userid, accessToken, refreshTokenOld, refreshTokenNew) {
+        return await this.tokenModel.findOneAndUpdate({ userid, refresh: refreshTokenOld }, {
+            $set: {
+                access: accessToken,
+                refresh: refreshTokenNew
+            }
+        });
+    }
+    async findAccessToken(userid, accessToken) {
+        return await this.tokenModel.findOne({
+            userid: userid,
+            access: accessToken
+        });
+    }
+    async findRefreshToken(userid, refreshToken) {
+        return await this.tokenModel.findOne({
+            userid: userid,
+            refresh: refreshToken
+        });
     }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)("user")),
-    __param(1, (0, mongoose_1.InjectModel)("token")),
+    __param(0, (0, mongoose_1.InjectModel)(users_model_1.User.name)),
+    __param(1, (0, mongoose_1.InjectModel)(tokens_model_1.Token.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
         mongoose_2.Model])
 ], UsersService);

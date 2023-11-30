@@ -3,13 +3,17 @@ import { Spinner } from "../include/Splash"
 import { useState } from "react"
 import classNames from "classnames"
 import useAxios from "axios-hooks"
+import { AuthSign } from "../../core/auth/Sign"
 
-export type SignInProps = {}
+export type SignInProps = {
+  onRefetch: () => {}
+}
 
 const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (
   props
 ) => {
-  const [{ data, response, loading, error }, axiosExec] = useAxios(
+  const [notice, setNotice] = useState("")
+  const [{ loading }, axiosExec] = useAxios(
     {
       url: "/users/signin",
       method: "POST",
@@ -27,9 +31,17 @@ const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (
       data: { username, password }
     })
       .then((res) => {
-        console.log(res)
+        if (!res.data || !res.data.accessToken || !res.data.refreshToken) {
+          return setNotice(t("auth:signin.notice_failed_login"))
+        }
+
+        AuthSign.setAccessTokenStorage(res.data.accessToken)
+        AuthSign.setRefreshTokenStorage(res.data.refreshToken)
+
+        setNotice("")
+        props.onRefetch()
       })
-      .catch((err) => {})
+      .catch((err) => setNotice(t("auth:signin.notice_data_incorrect")))
   }
 
   return (
@@ -38,6 +50,11 @@ const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (
         <h1>{t("auth:signin.banner")}</h1>
       </div>
       <form action="#" onSubmit={signin}>
+        {notice.length > 0 && (
+          <div className="signin-notice">
+            <span>{notice}</span>
+          </div>
+        )}
         <div className="signin-row">
           <label htmlFor="username">
             <span className="icomoon ic-auth-user signin-icon"></span>

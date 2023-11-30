@@ -10,7 +10,7 @@
 
 .signin-banner {
     color: #fff;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     text-align: center;
 }
 
@@ -86,4 +86,11 @@
         cursor: default;
         pointer-events: none;
     }
+}
+
+.signin-notice {
+    color: $danger-color;
+    font-size: 0.9em;
+    margin-bottom: 30px;
+    text-align: center;
 }
