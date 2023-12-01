@@ -13,11 +13,10 @@ const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (
   props
 ) => {
   const [notice, setNotice] = useState("")
-  const [{ loading }, axiosExec] = useAxios(
+  const [{ loading }, axiosExecute] = useAxios(
     {
       url: "/users/signin",
-      method: "POST",
-      withCredentials: true
+      method: "POST"
     },
     { manual: true }
   )
@@ -27,7 +26,7 @@ const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (
     const password = event.target.password.value
 
     event.preventDefault()
-    axiosExec({
+    axiosExecute({
       data: { username, password }
     })
       .then((res) => {

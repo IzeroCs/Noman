@@ -4,12 +4,26 @@
     min-height: $explorer-breadcrumb-height;
     width: 100%;
     margin-top: 10px;
+    position: relative;
 
     @include box-shadow-depth(1);
     @include border-radius($explorer-breadcrumb-radius);
+
 }
 
-.explorer-breadcrumb {
+.explorer-breadcrumb-loading {
+    background-color: rgba($on-suface-color, 0.1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+
+    @include border-radius($explorer-breadcrumb-radius);
+    @include transition(width $transition-default ease-in, opacity $transition-default ease-in);
+}
+
+.explorer-breadcrumb-list {
     display: inline-block;
     list-style: none;
     white-space: nowrap;

@@ -18,12 +18,13 @@ const path = require("path");
 const common_1 = require("@nestjs/common");
 const files_service_1 = require("./files.service");
 const mime_1 = require("../core/files/mime");
+const jwt_auth_guard_1 = require("../auth/jwt.auth.guard");
 let FilesController = class FilesController {
     constructor(filesService) {
         this.filesService = filesService;
     }
     async scan(pathScan) {
-        const resolvePath = path.resolve(path.join("E:", pathScan));
+        const resolvePath = path.resolve(path.join("E:", pathScan || ""));
         if (!fs.existsSync(resolvePath))
             throw new common_1.NotFoundException("Directory does not exists");
         const list = fs.readdirSync(resolvePath);
@@ -65,6 +66,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], FilesController.prototype, "scan", null);
 exports.FilesController = FilesController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.AccessTokenGuard),
     (0, common_1.Controller)("files"),
     __metadata("design:paramtypes", [files_service_1.FilesService])
 ], FilesController);

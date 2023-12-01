@@ -13,13 +13,13 @@ type ExplorerViewListProps = {
   fileModels?: Array<FileModel>
 }
 
-const ExplorerViewList: React.FC<ExplorerViewListProps &
-  React.HTMLAttributes<HTMLDivElement>
+const ExplorerViewList: React.FC<
+  ExplorerViewListProps & React.HTMLAttributes<HTMLDivElement>
 > = (props) => {
-  const filterColumns = props.filterColumns
-    .filter(col => typeof col.show === "undefined" || col.show === true)
-  const hasColumnStretch = filterColumns
-    .find(col => col.size === "stretch")
+  const filterColumns = props.filterColumns.filter(
+    (col) => typeof col.show === "undefined" || col.show === true
+  )
+  const hasColumnStretch = filterColumns.find((col) => col.size === "stretch")
   const fileModels = props.fileModels || []
 
   const colSize = (col: FilterColumn, index: number): string => {
@@ -28,42 +28,84 @@ const ExplorerViewList: React.FC<ExplorerViewListProps &
     return col.size || "small"
   }
 
-  return <div className="explorer-view-list">
-    <table className="explorer-view-list-table">
-      <thead className="explorer-view-list-head">
-        <tr>
-          {filterColumns.map((col, index) => {
-            return <td key={index} className={classNames("explorer-view-list-head-cell",
-              colSize(col, index))}>{col.label}</td>
-          })}
-        </tr>
-      </thead>
-      <tbody className="explorer-view-list-body">
-        {fileModels.map((item, index) => {
-          return <tr key={index} className="explorer-view-list-body-row">
-            {filterColumns.map((col, filterIndex) => {
-              const operation = FileAdapter[col.key as keyof typeof FileAdapter]
-              const isDirectory = item.ext === "d"
-              let value = item[col.key as keyof FileModel] as string
+  props.fileModels?.sort((a, b) => {
+    if (a.is_directory && b.is_directory && a.name > b.name) {
+      return a.name.localeCompare(b.name)
+    }
 
-              if (typeof operation !== "undefined")
-                value = operation(value)
+    if (a.is_directory && !b.is_directory) {
+      return -1
+    }
 
+    if (!a.is_directory && !b.is_directory && a.name > b.name) {
+      return a.name.localeCompare(b.name)
+    }
 
-              return <td key={filterIndex} className={classNames("explorer-view-list-body-cell",
-                colSize(col, filterIndex))}>
-                {col.key === "name" && isDirectory &&
-                  <span className="icomoon ic-explorer-directory icon-directory"></span>}
-                {col.key === "name" && !isDirectory &&
-                  <span className={classNames("icomoon", "ic-explorer-file-" + item.ext.substring(2), "icon-file")}></span>}
-                <span className="label">{value}</span>
-              </td>
+    return 0
+  })
+
+  return (
+    <div className="explorer-view-list">
+      <table className="explorer-view-list-table">
+        <thead className="explorer-view-list-head">
+          <tr>
+            {filterColumns.map((col, index) => {
+              return (
+                <td
+                  key={index}
+                  className={classNames(
+                    "explorer-view-list-head-cell",
+                    colSize(col, index)
+                  )}
+                >
+                  {col.label}
+                </td>
+              )
             })}
           </tr>
-        })}
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody className="explorer-view-list-body">
+          {fileModels.map((item, index) => {
+            return (
+              <tr key={index} className="explorer-view-list-body-row">
+                {filterColumns.map((col, filterIndex) => {
+                  const operation =
+                    FileAdapter[col.key as keyof typeof FileAdapter]
+                  let value = item[col.key as keyof FileModel] as string
+
+                  if (typeof operation !== "undefined") value = operation(value)
+
+                  return (
+                    <td
+                      key={filterIndex}
+                      className={classNames(
+                        "explorer-view-list-body-cell",
+                        colSize(col, filterIndex)
+                      )}
+                    >
+                      {col.key === "name" && item.is_directory && (
+                        <span className="icomoon ic-explorer-directory icon-directory"></span>
+                      )}
+                      {col.key === "name" && !item.is_directory && (
+                        <span
+                          className={classNames(
+                            "icomoon",
+                            "ic-explorer-file-" + item.icon,
+                            "icon-file"
+                          )}
+                        ></span>
+                      )}
+                      <span className="label">{value}</span>
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </div>
+  )
 }
 
 export default ExplorerViewList

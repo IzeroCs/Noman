@@ -25,9 +25,7 @@ const App: React.FC = () => {
     setWindowHeight(document.documentElement.clientHeight)
   const dispatchContextMenu = (e: any) => e.preventDefault()
 
-  const onRefetch = (): any => {
-    refetch()
-  }
+  const onRefetch = (): any => refetch()
 
   useEffect(() => {
     window.addEventListener("resize", dispatchResize)

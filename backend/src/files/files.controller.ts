@@ -10,14 +10,16 @@ import {
 } from "@nestjs/common"
 import { FilesService } from "./files.service"
 import { FilesMime } from "src/core/files/mime"
+import { AccessTokenGuard } from "src/auth/jwt.auth.guard"
 
+@UseGuards(AccessTokenGuard)
 @Controller("files")
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
   @Get("/scan")
   async scan(@Query("path") pathScan) {
-    const resolvePath = path.resolve(path.join("E:", pathScan))
+    const resolvePath = path.resolve(path.join("E:", pathScan || ""))
 
     if (!fs.existsSync(resolvePath))
       throw new NotFoundException("Directory does not exists")
