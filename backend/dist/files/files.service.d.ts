@@ -1,3 +1,6 @@
 export declare class FilesService {
-    scanDirectory(): Promise<void>;
+    scanDirectory(pathScan: string): Promise<{
+        message: string;
+        list: any[];
+    }>;
 }

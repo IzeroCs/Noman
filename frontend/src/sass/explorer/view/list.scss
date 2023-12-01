@@ -92,24 +92,40 @@
             color: #fcbe25;
         }
 
-        .ic-explorer-file-archive {
-            color: #d7a2fe;
+        .ic-explorer-file {
+            &-archive {
+                color: #d7a2fe;
+
+            }
+
+            &-image {
+                color: #f05fbe;
+            }
+
+            &-text {
+                color: #dc4914;
+            }
+
+            &-audio {
+                color: #5fa6e4;
+            }
+
+            &-video {
+                color: #ff0000;
+            }
+
+            &-document {
+                color: #00C851;
+            }
+
+            &-code {
+                color: #a060ee;
+            }
+
+            &-binary {
+                color: #2BBBAD;
+            }
         }
 
-        .ic-explorer-file-picture {
-            color: #f05fbe;
-        }
-
-        .ic-explorer-file-text {
-            color: #dc4914;
-        }
-
-        .ic-explorer-file-music {
-            color: #5fa6e4;
-        }
-
-        .ic-explorer-file-video {
-            color: #ff0000;
-        }
     }
 }

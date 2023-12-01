@@ -1,14 +1,16 @@
 {
   "header.name": "Tên",
   "header.size": "Kích thước",
-  "header.ext": "Định dạng",
-  "header.owner": "Người tạo",
-  "header.created_date": "Ngày tạo",
+  "header.extension": "Định dạng",
+  "header.created_time": "Ngày tạo",
   "file.ext_directory": "Thư mục",
   "file.ext_archive": "Tập tin nén",
-  "file.ext_picture": "Hình ảnh",
+  "file.ext_image": "Hình ảnh",
   "file.ext_text": "Văn bản",
   "file.ext_video": "Video",
-  "file.ext_music": "Nhạc",
+  "file.ext_audio": "Nhạc",
+  "file.ext_document": "Tài liệu",
+  "file.ext_binary": "Nhị phân",
+  "file.ext_code": "Tập lệnh",
   "file.ext_unknown": "Không rõ"
 }

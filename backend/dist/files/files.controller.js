@@ -13,48 +13,15 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FilesController = void 0;
-const fs = require("fs");
-const path = require("path");
 const common_1 = require("@nestjs/common");
 const files_service_1 = require("./files.service");
-const mime_1 = require("../core/files/mime");
 const jwt_auth_guard_1 = require("../auth/jwt.auth.guard");
 let FilesController = class FilesController {
     constructor(filesService) {
         this.filesService = filesService;
     }
     async scan(pathScan) {
-        const resolvePath = path.resolve(path.join("E:", pathScan || ""));
-        if (!fs.existsSync(resolvePath))
-            throw new common_1.NotFoundException("Directory does not exists");
-        const list = fs.readdirSync(resolvePath);
-        const resolveItemPath = (item) => {
-            return path.resolve(path.join(resolvePath, item));
-        };
-        return {
-            message: "Scan directory successfully",
-            list: list
-                .filter((item) => {
-                return fs.existsSync(resolveItemPath(item));
-            })
-                .map((item) => {
-                const stat = fs.lstatSync(resolveItemPath(item));
-                const info = {
-                    name: item,
-                    size: stat.size,
-                    mode: stat.mode,
-                    is_directory: stat.isDirectory(),
-                    created_time: stat.ctimeMs,
-                    modified_time: stat.mtimeMs
-                };
-                if (stat.isFile()) {
-                    const mime = mime_1.FilesMime.lookup(item);
-                    info.icon = mime.icon;
-                    info.extension = mime.extension;
-                }
-                return info;
-            })
-        };
+        return await this.filesService.scanDirectory(pathScan || "");
     }
 };
 exports.FilesController = FilesController;

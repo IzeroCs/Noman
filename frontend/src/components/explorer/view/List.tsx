@@ -73,7 +73,8 @@ const ExplorerViewList: React.FC<
                     FileAdapter[col.key as keyof typeof FileAdapter]
                   let value = item[col.key as keyof FileModel] as string
 
-                  if (typeof operation !== "undefined") value = operation(value)
+                  if (typeof operation !== "undefined")
+                    value = operation(value, item)
 
                   return (
                     <td
