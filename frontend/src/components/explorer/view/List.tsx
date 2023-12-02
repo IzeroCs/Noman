@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import FileModel, { FileAdapter } from "../model/File"
+import { OnDirectoryClickCallback, OnFileClickCallback } from "../"
 
 export type FilterColumn = {
   key: string
@@ -11,11 +12,23 @@ export type FilterColumn = {
 type ExplorerViewListProps = {
   filterColumns: Array<FilterColumn>
   fileModels?: Array<FileModel>
+  onDirectoryClick?: OnDirectoryClickCallback
+  onFileClick?: OnFileClickCallback
 }
 
 const ExplorerViewList: React.FC<
   ExplorerViewListProps & React.HTMLAttributes<HTMLDivElement>
 > = (props) => {
+  const onRowClick = (event: any, fileModel: FileModel, index: number): any => {
+    event.preventDefault()
+
+    if (fileModel.is_directory)
+      props.onDirectoryClick?.onDirectoryClick(fileModel)
+    else props.onFileClick?.onFileClick(fileModel)
+
+    return false
+  }
+
   const filterColumns = props.filterColumns.filter(
     (col) => typeof col.show === "undefined" || col.show === true
   )
@@ -67,7 +80,11 @@ const ExplorerViewList: React.FC<
         <tbody className="explorer-view-list-body">
           {fileModels.map((item, index) => {
             return (
-              <tr key={index} className="explorer-view-list-body-row">
+              <tr
+                key={index}
+                className="explorer-view-list-body-row"
+                onDoubleClick={(event) => onRowClick(event, item, index)}
+              >
                 {filterColumns.map((col, filterIndex) => {
                   const operation =
                     FileAdapter[col.key as keyof typeof FileAdapter]

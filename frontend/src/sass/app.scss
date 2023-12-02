@@ -19,7 +19,6 @@ body {
 body,
 html * {
     font-family: 'Nunito', sans-serif;
-
     @include user-select(none);
 }
 

@@ -1,3 +1,4 @@
+import { OnDirectoryClickCallback, OnFileClickCallback } from "."
 import i18next from "../../i18next"
 import FileModel from "./model/File"
 import ExplorerViewGrid from "./view/Grid"
@@ -6,6 +7,8 @@ import ExplorerViewList, { FilterColumn } from "./view/List"
 type ExplorerViewProps = {
   type?: "grid" | "list"
   files: Array<FileModel>
+  onDirectoryClick?: OnDirectoryClickCallback
+  onFileClick?: OnFileClickCallback
 }
 
 const filterColumns: Array<FilterColumn> = [
@@ -34,6 +37,8 @@ const ExplorerView: React.FC<
         <ExplorerViewList
           filterColumns={filterColumns}
           fileModels={props.files}
+          onDirectoryClick={props.onDirectoryClick}
+          onFileClick={props.onFileClick}
         />
       ) : (
         <ExplorerViewGrid />

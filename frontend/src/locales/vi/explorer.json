@@ -1,4 +1,5 @@
 {
+  "breadcrumb.home": "Home",
   "header.name": "Tên",
   "header.size": "Kích thước",
   "header.extension": "Định dạng",
@@ -12,5 +13,10 @@
   "file.ext_document": "Tài liệu",
   "file.ext_binary": "Nhị phân",
   "file.ext_code": "Tập lệnh",
+  "file.ext_program": "Chương trình",
+  "file.ext_font": "Phông chữ",
+  "file.ext_disk": "Ảnh đĩa",
+  "file.ext_android": "Android",
+  "file.ext_ebook": "Sách điện tử",
   "file.ext_unknown": "Không rõ"
 }

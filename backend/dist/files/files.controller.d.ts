@@ -4,6 +4,7 @@ export declare class FilesController {
     constructor(filesService: FilesService);
     scan(pathScan: any): Promise<{
         message: string;
+        path: string;
         list: any[];
     }>;
 }

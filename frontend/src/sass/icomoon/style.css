@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?di54rw');
-  src:  url('fonts/icomoon.eot?di54rw#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?di54rw') format('truetype'),
-    url('fonts/icomoon.woff?di54rw') format('woff'),
-    url('fonts/icomoon.svg?di54rw#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?kbuyr2');
+  src:  url('fonts/icomoon.eot?kbuyr2#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?kbuyr2') format('truetype'),
+    url('fonts/icomoon.woff?kbuyr2') format('woff'),
+    url('fonts/icomoon.svg?kbuyr2#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ic-explorer-file-ebook:before {
+  content: "\e923";
+}
+.ic-explorer-file-disk:before {
+  content: "\e920";
+}
+.ic-explorer-file-font:before {
+  content: "\e91f";
+}
+.ic-explorer-file-android:before {
+  content: "\e91e";
+}
+.ic-explorer-file-program:before {
+  content: "\e91d";
+}
 .ic-explorer-file-binary:before {
   content: "\e91c";
 }

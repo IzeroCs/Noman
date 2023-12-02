@@ -1,12 +1,17 @@
 export const DBIcon = {
-  image: ["jpg", "jpeg", "png", "bmp"],
+  image: ["jpg", "jpeg", "png", "bmp", "ico"],
   video: ["mp4", "ts"],
   audio: ["mp3"],
-  document: ["doc", "docx", "xls", "ppt", "odt", "pptx", "xlsx"],
-  text: ["txt"],
+  document: ["doc", "docx", "xls", "ppt", "odt", "pptx", "xlsx", "pdf"],
+  text: ["txt", "log", "ini", "inf"],
   code: ["css", "sass", "scss", "less", "html", "js", "jsx", "mjs", "json"],
-  binary: ["bin"],
-  archive: ["zip", "rar", "7z", "tar", "gz"]
+  binary: ["bin", "rom", "ffs", "dat", "pat"],
+  archive: ["zip", "rar", "7z", "tar", "gz", "xz"],
+  program: ["exe", "dll", "com", "bat", "msi", "deb", "udeb"],
+  android: ["apk"],
+  font: ["otf", "ttf", "ttc", "woff", "woff2"],
+  disk: ["iso", "img"],
+  ebook: ["epub", "azw", "mobi", "cbr", "cbz"]
 }
 
 export const DBMimeType = {

@@ -18,6 +18,7 @@ export class FilesService {
 
     return {
       message: "Scan directory successfully",
+      path: pathScan,
       list: list
         .filter((item) => {
           return fs.existsSync(resolveItemPath(item))

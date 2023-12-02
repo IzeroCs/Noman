@@ -7,6 +7,11 @@ export declare const DBIcon: {
     code: string[];
     binary: string[];
     archive: string[];
+    program: string[];
+    android: string[];
+    font: string[];
+    disk: string[];
+    ebook: string[];
 };
 export declare const DBMimeType: {
     "application/andrew-inset": string[];

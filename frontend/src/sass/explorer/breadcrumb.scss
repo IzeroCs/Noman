@@ -18,6 +18,7 @@
     left: 0;
     width: 0%;
     height: 100%;
+    pointer-events: none;
 
     @include border-radius($explorer-breadcrumb-radius);
     @include transition(width $transition-default ease-in, opacity $transition-default ease-in);
@@ -67,10 +68,6 @@
         &:hover {
             filter: brightness(150%);
             @include tap-highlight-color();
-        }
-
-        &.current {
-            pointer-events: none;
         }
     }
 }
