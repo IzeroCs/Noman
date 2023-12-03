@@ -16,5 +16,5 @@ $header-bg-color: $primary-color;
 $header-title-color: #fff;
 $header-icon-color: #fff;
 
-$context-menu-border-color: lighten($bg-color, 1%);
+$context-menu-border-color: lighten($bg-color, 5%);
 $context-menu-hover-color: color.change($on-suface-color, $lightness: 12%);

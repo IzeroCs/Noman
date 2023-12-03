@@ -98,6 +98,16 @@
     }
 }
 
+$context-menu-icon-colors: (
+    "action-rename": #2BBBAD,
+    "action-copy": #aa66cc,
+    "action-cut": #ffbb33,
+    "action-delete": #ff4444,
+    "action-detail": #33b5e5,
+    "action-favorites": #FF8800,
+    "action-share": #0d47a1
+);
+
 .context-menu-icon {
     color: $on-suface-color;
     font-size: 1rem;
@@ -106,6 +116,12 @@
 
     &.invisible {
         color: transparent;
+    }
+
+    @each $action, $color in $context-menu-icon-colors {
+        &.ic-#{$action} {
+            color: $color;
+        }
     }
 }
 

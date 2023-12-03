@@ -73,7 +73,7 @@ $ic-explore-file-colors: (
 
     &-cell {
         font-weight: bold;
-        background-color: color.change($on-suface-color, $lightness: 15%);
+        background-color: color.change($on-suface-color, $lightness: 14%);
         border-top: 0;
         padding: 10px;
     }
