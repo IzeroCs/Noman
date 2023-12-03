@@ -18,5 +18,12 @@
   "file.ext_disk": "Ảnh đĩa",
   "file.ext_android": "Android",
   "file.ext_ebook": "Sách điện tử",
-  "file.ext_unknown": "Không rõ"
+  "file.ext_unknown": "Không rõ",
+  "view-list.context_menu_detail": "Thông tin",
+  "view-list.context_menu_rename": "Đổi tên",
+  "view-list.context_menu_copy": "Sao chép",
+  "view-list.context_menu_cut": "Di chuyển",
+  "view-list.context_menu_delete": "Xóa",
+  "view-list.context_menu_favorites": "Yêu thích",
+  "view-list.context_menu_share": "Chia sẻ"
 }

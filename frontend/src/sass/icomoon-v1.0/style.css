@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?kbuyr2');
-  src:  url('fonts/icomoon.eot?kbuyr2#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?kbuyr2') format('truetype'),
-    url('fonts/icomoon.woff?kbuyr2') format('woff'),
-    url('fonts/icomoon.svg?kbuyr2#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?q4onip');
+  src:  url('fonts/icomoon.eot?q4onip#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?q4onip') format('truetype'),
+    url('fonts/icomoon.woff?q4onip') format('woff'),
+    url('fonts/icomoon.svg?q4onip#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,45 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ic-action-favorites:before {
+  content: "\e92f";
+}
+.ic-action-share:before {
+  content: "\e930";
+}
+.ic-action-cut:before {
+  content: "\e92e";
+}
+.ic-action-detail:before {
+  content: "\e92d";
+}
+.ic-action-copy:before {
+  content: "\e929";
+}
+.ic-action-delete:before {
+  content: "\e92a";
+}
+.ic-action-paste:before {
+  content: "\e92b";
+}
+.ic-action-rename:before {
+  content: "\e92c";
+}
+.ic-arrow-bottom-fill:before {
+  content: "\e925";
+}
+.ic-arrow-left-fill:before {
+  content: "\e926";
+}
+.ic-arrow-right-fill:before {
+  content: "\e927";
+}
+.ic-arrow-top-fill:before {
+  content: "\e928";
+}
+.ic-context-menu-invisible:before {
+  content: "\e924";
+}
 .ic-explorer-file-ebook:before {
   content: "\e923";
 }

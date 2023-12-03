@@ -1,11 +1,12 @@
 @use "sass:math";
+@use "sass:color";
 
 @import "./variables.scss";
 @import "./colors.scss";
 @import "./font.scss";
 @import "./function.scss";
 @import "./mixin.scss";
-@import "./icomoon/style.scss";
+@import "./icomoon-v1.0/style.scss";
 
 body {
     background-color: $bg-color;
@@ -39,5 +40,6 @@ input:-webkit-autofill:active {
 @import "./include/main.scss";
 @import "./include/sidebar.scss";
 @import "./include/content.scss";
+@import "./view/context_menu.scss";
 @import "./auth/style.scss";
 @import "./explorer/style.scss";

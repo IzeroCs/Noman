@@ -1,0 +1,155 @@
+.context-menu-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 99999;
+    visibility: visible;
+    pointer-events: none;
+
+    &.show {
+        pointer-events: all;
+    }
+}
+
+.context-menu {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    background-color: $suface-color;
+    border: 1px solid $context-menu-border-color;
+    margin-top: math.div($context-menu-item-spacing, 2);
+    padding: #{$context-menu-item-spacing * 0.8};
+    width: fit-content;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: all;
+
+    @include transition(opacity $transition-default);
+    @include border-radius($context-menu-radius);
+    @include box-shadow-depth(4);
+
+    &.show {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.context-menu-item {
+    display: block;
+    width: 100%;
+    padding: 0 $context-menu-item-spacing;
+    padding-right: $context-menu-item-spacing * 3;
+    position: relative;
+    white-space: nowrap;
+    cursor: pointer;
+    height: $context-menu-item-height;
+
+    @include tap-highlight-color();
+    @include transition($transition-default);
+    @include box-sizing(border-box);
+
+    &:hover {
+        background-color: $context-menu-hover-color;
+        @include border-radius($context-menu-radius);
+    }
+
+    &.disabled {
+        pointer-events: none;
+
+        .context-menu-title,
+        .context-menu-icon:not(.invisible),
+        &.children::after {
+            color: #444;
+        }
+    }
+
+    &.divider {
+        margin-bottom: $context-menu-item-spacing;
+    }
+
+    &.divider::before {
+        content: "";
+        border-bottom: 1px solid $context-menu-border-color;
+        position: absolute;
+        bottom: math.div(-$context-menu-item-spacing, 2);
+        left: 0;
+        width: 100%;
+
+        @include box-sizing(border-box);
+    }
+
+    &.children::after {
+        color: $on-suface-color;
+        content: $ic-arrow-right-fill;
+        position: absolute;
+        top: 50%;
+        right: 0;
+
+        @include icomoon;
+        @include translate(0, -50%);
+    }
+
+    &.children:hover>.context-menu-children {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.context-menu-icon {
+    color: $on-suface-color;
+    font-size: 1rem;
+    margin-right: $context-menu-item-spacing;
+    vertical-align: middle;
+
+    &.invisible {
+        color: transparent;
+    }
+}
+
+.context-menu-title {
+    color: $on-suface-color;
+    font-size: 0.95rem;
+    line-height: $context-menu-item-height;
+}
+
+.context-menu-children {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    background-color: $suface-color;
+    border: 1px solid $context-menu-border-color;
+    position: absolute;
+    top: 0;
+    left: calc(100% + #{$context-menu-parent-children-spacing});
+    height: fit-content;
+    width: fit-content;
+    padding: #{$context-menu-item-spacing * 0.8};
+    padding-right: #{$context-menu-item-spacing};
+
+    @include transition($transition-default);
+    @include border-radius($context-menu-radius);
+    @include box-shadow-depth(4);
+
+    &::after {
+        content: "";
+        background-color: transparent;
+        position: absolute;
+        top: 0;
+        left: -#{$context-menu-parent-children-spacing * 2};
+        width: #{$context-menu-parent-children-spacing * 2};
+        height: 100%;
+    }
+}
+
+.context-menu-children-item {
+    padding: 0 #{$context-menu-item-spacing};
+    height: $context-menu-item-height;
+
+    &:hover {
+        background-color: $context-menu-hover-color;
+        @include border-radius($context-menu-radius);
+    }
+}

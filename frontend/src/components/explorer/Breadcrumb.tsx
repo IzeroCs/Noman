@@ -1,13 +1,10 @@
-import classNames from "classnames"
 import i18next from "i18next"
 import { useEffect } from "react"
 import { FileSystem } from "../../core/file/FileSystem"
 import { useState } from "react"
 import { OnBreadcrumbClickCallback } from "./index"
 
-export interface OnLoadingTransitionEndCallback {
-  onLoadingTransitionEnd(event: any): any
-}
+export type OnLoadingTransitionEndCallback = (event: any) => any
 
 type ExplorerBreadcrumbProps = {
   pathCurrent: string
@@ -31,7 +28,10 @@ const ExplorerBreadcrumb: React.FC<
     )
 
     event.preventDefault()
-    props.onBreadcrumbClick?.onBreadcrumbClick(pathFetch)
+
+    if (props.onBreadcrumbClick) {
+      props.onBreadcrumbClick(pathFetch)
+    }
   }
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const ExplorerBreadcrumb: React.FC<
           width: props.loadingWidth + "%",
           opacity: props.loadingOpacity
         }}
-        onTransitionEnd={props.onLoadingTransitionEnd?.onLoadingTransitionEnd}
+        onTransitionEnd={props.onLoadingTransitionEnd}
       ></div>
     </div>
   )

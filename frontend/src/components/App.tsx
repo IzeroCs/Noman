@@ -1,15 +1,14 @@
 import useAxios from "axios-hooks"
-import React, { useState, useEffect } from "react"
 import Main from "./include/Main"
 import Auth from "./auth"
-import ContextMenu from "./include/ContextMenu"
+import ContextMenu from "./view/ContextMenu"
 import Sidebar from "./include/Sidebar"
 import Content from "./include/Content"
 import TreeView from "./view/TreeView"
 import Explorer from "./explorer"
-
-import "../sass/app.scss"
 import Splash from "./include/Splash"
+import React, { useState, useEffect } from "react"
+import "../sass/app.scss"
 
 const App: React.FC = () => {
   const [{ loading, error }, refetch] = useAxios({

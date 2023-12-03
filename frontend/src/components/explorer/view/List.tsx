@@ -1,6 +1,10 @@
 import classNames from "classnames"
+import React from "react"
 import FileModel, { FileAdapter } from "../model/File"
 import { OnDirectoryClickCallback, OnFileClickCallback } from "../"
+import { ContextMenu } from "../../../core/view/ContextMenu"
+import { ContextMenuItem } from "../../view/ContextMenu"
+import i18next from "i18next"
 
 export type FilterColumn = {
   key: string
@@ -16,16 +20,59 @@ type ExplorerViewListProps = {
   onFileClick?: OnFileClickCallback
 }
 
+const ExplorerBodyRowContextMenu: Array<ContextMenuItem> = [
+  {
+    title: i18next.t("explorer:view-list.context_menu_rename"),
+    icon: "ic-action-rename"
+  },
+  {
+    title: i18next.t("explorer:view-list.context_menu_copy"),
+    icon: "ic-action-copy"
+  },
+  {
+    title: i18next.t("explorer:view-list.context_menu_cut"),
+    icon: "ic-action-cut"
+  },
+  {
+    title: i18next.t("explorer:view-list.context_menu_delete"),
+    icon: "ic-action-delete"
+  },
+  {
+    title: i18next.t("explorer:view-list.context_menu_detail"),
+    icon: "ic-action-detail",
+    divider: true
+  },
+  {
+    title: i18next.t("explorer:view-list.context_menu_favorites"),
+    icon: "ic-action-favorites"
+  },
+  {
+    title: i18next.t("explorer:view-list.context_menu_share"),
+    icon: "ic-action-share"
+  }
+]
+
 const ExplorerViewList: React.FC<
   ExplorerViewListProps & React.HTMLAttributes<HTMLDivElement>
 > = (props) => {
   const onRowClick = (event: any, fileModel: FileModel, index: number): any => {
     event.preventDefault()
 
-    if (fileModel.is_directory)
-      props.onDirectoryClick?.onDirectoryClick(fileModel)
-    else props.onFileClick?.onFileClick(fileModel)
+    if (props.onDirectoryClick && fileModel.is_directory) {
+      props.onDirectoryClick(fileModel)
+    } else if (props.onFileClick) {
+      props.onFileClick(fileModel)
+    }
 
+    return false
+  }
+
+  const onRowContextMenu = (
+    event: React.MouseEvent,
+    fileModel: FileModel,
+    index: number
+  ): any => {
+    ContextMenu.displayMenuList(event, ExplorerBodyRowContextMenu)
     return false
   }
 
@@ -83,7 +130,8 @@ const ExplorerViewList: React.FC<
               <tr
                 key={index}
                 className="explorer-view-list-body-row"
-                onDoubleClick={(event) => onRowClick(event, item, index)}
+                onClick={(event) => onRowClick(event, item, index)}
+                onContextMenu={(event) => onRowContextMenu(event, item, index)}
               >
                 {filterColumns.map((col, filterIndex) => {
                   const operation =

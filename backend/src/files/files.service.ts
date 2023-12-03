@@ -2,11 +2,29 @@ import * as fs from "fs"
 import * as path from "path"
 import { Injectable, NotFoundException } from "@nestjs/common"
 import { FilesMime } from "src/core/files/mime"
+import { ConfigService } from "@nestjs/config"
 
 @Injectable()
 export class FilesService {
+  private dataRootPath: string
+
+  constructor(private readonly configService: ConfigService) {
+    this.dataRootPath = path.resolve(configService.get("DATA_ROOT"))
+  }
+
+  isPathOuter(pathFile: string) {
+    return !this.resolvePath(pathFile).startsWith(this.dataRootPath)
+  }
+
+  resolvePath(pathFile: string) {
+    return path.resolve(path.join(this.dataRootPath, pathFile))
+  }
+
   async scanDirectory(pathScan: string) {
-    const resolvePath = path.resolve(path.join("E:", pathScan))
+    if (this.isPathOuter(pathScan))
+      throw new NotFoundException("Directory does not exists")
+
+    const resolvePath = this.resolvePath(pathScan)
 
     if (!fs.existsSync(resolvePath))
       throw new NotFoundException("Directory does not exists")

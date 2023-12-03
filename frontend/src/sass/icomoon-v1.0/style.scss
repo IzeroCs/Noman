@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?kbuyr2');
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?kbuyr2#iefix') format('embedded-opentype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?kbuyr2') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?kbuyr2') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?kbuyr2##{$icomoon-font-family}') format('svg');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?q4onip');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?q4onip#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?q4onip') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?q4onip') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?q4onip##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -27,6 +27,71 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ic-action-favorites {
+  &:before {
+    content: $ic-action-favorites; 
+  }
+}
+.ic-action-share {
+  &:before {
+    content: $ic-action-share; 
+  }
+}
+.ic-action-cut {
+  &:before {
+    content: $ic-action-cut; 
+  }
+}
+.ic-action-detail {
+  &:before {
+    content: $ic-action-detail; 
+  }
+}
+.ic-action-copy {
+  &:before {
+    content: $ic-action-copy; 
+  }
+}
+.ic-action-delete {
+  &:before {
+    content: $ic-action-delete; 
+  }
+}
+.ic-action-paste {
+  &:before {
+    content: $ic-action-paste; 
+  }
+}
+.ic-action-rename {
+  &:before {
+    content: $ic-action-rename; 
+  }
+}
+.ic-arrow-bottom-fill {
+  &:before {
+    content: $ic-arrow-bottom-fill; 
+  }
+}
+.ic-arrow-left-fill {
+  &:before {
+    content: $ic-arrow-left-fill; 
+  }
+}
+.ic-arrow-right-fill {
+  &:before {
+    content: $ic-arrow-right-fill; 
+  }
+}
+.ic-arrow-top-fill {
+  &:before {
+    content: $ic-arrow-top-fill; 
+  }
+}
+.ic-context-menu-invisible {
+  &:before {
+    content: $ic-context-menu-invisible; 
+  }
+}
 .ic-explorer-file-ebook {
   &:before {
     content: $ic-explorer-file-ebook; 

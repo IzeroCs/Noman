@@ -1,5 +1,21 @@
 @use "sass:color";
 
+$ic-explore-file-colors: (
+    "archive": #d7a2fe,
+    "image": #f05fbe,
+    "text": #a6a6a6,
+    "audio": #5fa6e4,
+    "video": #ff0000,
+    "document": #00C851,
+    "code": #a060a0,
+    "binary": #2BBBAD,
+    "program": #e55153,
+    "android": #a7c741,
+    "font": #4fb5e8,
+    "disk": #526179,
+    "ebook": #8abb1f
+);
+
 .explorer-view-list {
     width: 100%;
     height: 100%;
@@ -92,29 +108,12 @@
             color: #fcbe25;
         }
 
-        $ic-explore-file-colors: (
-            "archive": #d7a2fe,
-            "image": #f05fbe,
-            "text": #a6a6a6,
-            "audio": #5fa6e4,
-            "video": #ff0000,
-            "document": #00C851,
-            "code": #a060a0,
-            "binary": #2BBBAD,
-            "program": #e55153,
-            "android": #a7c741,
-            "font": #4fb5e8,
-            "disk": #526179,
-            "ebook": #8abb1f
-        );
-
-    .ic-explorer-file {
-        @each $name, $color in $ic-explore-file-colors {
-            &-#{$name} {
-                color: $color;
+        .ic-explorer-file {
+            @each $name, $color in $ic-explore-file-colors {
+                &-#{$name} {
+                    color: $color;
+                }
             }
         }
     }
-
-}
 }
