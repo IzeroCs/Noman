@@ -2,11 +2,9 @@ import classNames from "classnames"
 import React, { useState, useEffect } from "react"
 import FileModel, { FileAdapter } from "../model/File"
 import { OnDirectoryClickCallback, OnFileClickCallback } from "../"
-import { ContextMenu } from "../../../core/view/ContextMenu"
-import { ContextMenuItem } from "../../view/ContextMenu"
-import i18next from "i18next"
 import { useAppDispatch, useAppSelector } from "../../../store/Hooks"
 import { ContextMenuSelector } from "../../../store/reducers/ContextMenu"
+import { OnContextMenuClickCallback } from "../View"
 
 export type FilterColumn = {
   key: string
@@ -21,71 +19,40 @@ type ExplorerViewListProps = {
   fileModels?: Array<FileModel>
   onDirectoryClick?: OnDirectoryClickCallback
   onFileClick?: OnFileClickCallback
+  onContextMenuClick: OnContextMenuClickCallback
 }
-
-const ExplorerBodyRowContextMenu: Array<ContextMenuItem> = [
-  {
-    title: i18next.t("explorer:view-list.context_menu_rename"),
-    icon: "ic-action-rename"
-  },
-  {
-    title: i18next.t("explorer:view-list.context_menu_copy"),
-    icon: "ic-action-copy"
-  },
-  {
-    title: i18next.t("explorer:view-list.context_menu_cut"),
-    icon: "ic-action-cut"
-  },
-  {
-    title: i18next.t("explorer:view-list.context_menu_delete"),
-    icon: "ic-action-delete"
-  },
-  {
-    title: i18next.t("explorer:view-list.context_menu_detail"),
-    icon: "ic-action-detail",
-    divider: true
-  },
-  {
-    title: i18next.t("explorer:view-list.context_menu_favorites"),
-    icon: "ic-action-favorites"
-  },
-  {
-    title: i18next.t("explorer:view-list.context_menu_share"),
-    icon: "ic-action-share"
-  }
-]
 
 const ExplorerViewList: React.FC<
   ExplorerViewListProps & React.HTMLAttributes<HTMLDivElement>
 > = (props) => {
-  const appDispatch = useAppDispatch()
   const isContextMenuShow = useAppSelector(ContextMenuSelector.isMenuShow)
   const [rowActived, setRowActived] = useState(-1)
   const [cellActived, setCellActived] = useState(-1)
-  const [rowActivedTime, setRowActivedTime] = useState(0)
+
+  let timeoutID: any = null
 
   const onRowClick = (event: any, fileModel: FileModel, index: number): any => {
     const targetElement = event.target
-    const dateNow = Date.now()
     let parentElement = targetElement.parentElement
 
-    console.log(dateNow - rowActivedTime)
     if (
       targetElement &&
       rowActived === index &&
-      dateNow - rowActivedTime >= 800 &&
       targetElement.getAttribute("data-cell-input") !== null
     ) {
-      const input: any = Object.values(targetElement.children).find(
-        (child: any) => child.getAttribute("data-cell-input")
-      )
+      timeoutID = setTimeout(() => {
+        console.log("Func timeout")
+        const input: any = Object.values(targetElement.children).find(
+          (child: any) => child.getAttribute("data-cell-input")
+        )
 
-      setCellActived(parseInt(targetElement.getAttribute("data-cell-input")))
+        setCellActived(parseInt(targetElement.getAttribute("data-cell-input")))
 
-      if (input && input.tagName === "INPUT") {
-        input.setSelectionRange(input.value.length, input.value.length)
-        input.focus()
-      }
+        if (input && input.tagName === "INPUT") {
+          input.setSelectionRange(input.value.length, input.value.length)
+          input.focus()
+        }
+      }, 2000)
     } else {
       setCellActived(-1)
     }
@@ -97,8 +64,10 @@ const ExplorerViewList: React.FC<
       parentElement = parentElement.parentElement
     }
 
-    if (rowActived !== index) {
-      setRowActivedTime(dateNow)
+    if (rowActived !== index && timeoutID) {
+      console.log("Clear timeout id")
+      timeoutID = null
+      clearTimeout(timeoutID)
     }
 
     setRowActived(index)
@@ -116,20 +85,23 @@ const ExplorerViewList: React.FC<
     fileModel: FileModel,
     index: number
   ): any => {
-    event.preventDefault()
+    let pass = false
 
     if (props.onDirectoryClick && fileModel.is_directory) {
-      setRowActived(-1)
-      setCellActived(-1)
-      setRowActivedTime(0)
-      event.stopPropagation()
       props.onDirectoryClick(fileModel)
     } else if (props.onFileClick) {
+      props.onFileClick(fileModel)
+    }
+
+    event.preventDefault()
+
+    if (pass) {
       setRowActived(-1)
       setCellActived(-1)
-      setRowActivedTime(0)
       event.stopPropagation()
-      props.onFileClick(fileModel)
+      clearTimeout(timeoutID)
+
+      timeoutID = null
     }
 
     return false
@@ -141,10 +113,9 @@ const ExplorerViewList: React.FC<
     index: number
   ): any => {
     setRowActived(index)
-    setRowActivedTime(Date.now())
     event.preventDefault()
     event.stopPropagation()
-    ContextMenu.displayMenuList(event, ExplorerBodyRowContextMenu)
+    props.onContextMenuClick(event, fileModel, index)
 
     return false
   }
@@ -152,7 +123,6 @@ const ExplorerViewList: React.FC<
   const onWindowOutside = (event: any) => {
     setRowActived(-1)
     setCellActived(-1)
-    setRowActivedTime(0)
   }
 
   const fileModels = props.fileModels || []
