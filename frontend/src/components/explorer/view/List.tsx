@@ -1,16 +1,19 @@
 import classNames from "classnames"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import FileModel, { FileAdapter } from "../model/File"
 import { OnDirectoryClickCallback, OnFileClickCallback } from "../"
 import { ContextMenu } from "../../../core/view/ContextMenu"
 import { ContextMenuItem } from "../../view/ContextMenu"
 import i18next from "i18next"
+import { useAppDispatch, useAppSelector } from "../../../store/Hooks"
+import { ContextMenuSelector } from "../../../store/reducers/ContextMenu"
 
 export type FilterColumn = {
   key: string
   label: string
   show?: boolean
   size?: "small" | "medium" | "large" | "stretch" | undefined
+  isName?: boolean
 }
 
 type ExplorerViewListProps = {
@@ -55,12 +58,77 @@ const ExplorerBodyRowContextMenu: Array<ContextMenuItem> = [
 const ExplorerViewList: React.FC<
   ExplorerViewListProps & React.HTMLAttributes<HTMLDivElement>
 > = (props) => {
+  const appDispatch = useAppDispatch()
+  const isContextMenuShow = useAppSelector(ContextMenuSelector.isMenuShow)
+  const [rowActived, setRowActived] = useState(-1)
+  const [cellActived, setCellActived] = useState(-1)
+  const [rowActivedTime, setRowActivedTime] = useState(0)
+
   const onRowClick = (event: any, fileModel: FileModel, index: number): any => {
+    const targetElement = event.target
+    const dateNow = Date.now()
+    let parentElement = targetElement.parentElement
+
+    console.log(dateNow - rowActivedTime)
+    if (
+      targetElement &&
+      rowActived === index &&
+      dateNow - rowActivedTime >= 800 &&
+      targetElement.getAttribute("data-cell-input") !== null
+    ) {
+      const input: any = Object.values(targetElement.children).find(
+        (child: any) => child.getAttribute("data-cell-input")
+      )
+
+      setCellActived(parseInt(targetElement.getAttribute("data-cell-input")))
+
+      if (input && input.tagName === "INPUT") {
+        input.setSelectionRange(input.value.length, input.value.length)
+        input.focus()
+      }
+    } else {
+      setCellActived(-1)
+    }
+
+    if (
+      parentElement &&
+      parentElement.getAttribute("data-row-index") === null
+    ) {
+      parentElement = parentElement.parentElement
+    }
+
+    if (rowActived !== index) {
+      setRowActivedTime(dateNow)
+    }
+
+    setRowActived(index)
+
+    if (!isContextMenuShow) {
+      event.preventDefault()
+      event.stopPropagation()
+
+      return false
+    }
+  }
+
+  const onRowDoubleClick = (
+    event: any,
+    fileModel: FileModel,
+    index: number
+  ): any => {
     event.preventDefault()
 
     if (props.onDirectoryClick && fileModel.is_directory) {
+      setRowActived(-1)
+      setCellActived(-1)
+      setRowActivedTime(0)
+      event.stopPropagation()
       props.onDirectoryClick(fileModel)
     } else if (props.onFileClick) {
+      setRowActived(-1)
+      setCellActived(-1)
+      setRowActivedTime(0)
+      event.stopPropagation()
       props.onFileClick(fileModel)
     }
 
@@ -72,15 +140,28 @@ const ExplorerViewList: React.FC<
     fileModel: FileModel,
     index: number
   ): any => {
+    setRowActived(index)
+    setRowActivedTime(Date.now())
+    event.preventDefault()
+    event.stopPropagation()
     ContextMenu.displayMenuList(event, ExplorerBodyRowContextMenu)
+
     return false
   }
 
+  const onWindowOutside = (event: any) => {
+    setRowActived(-1)
+    setCellActived(-1)
+    setRowActivedTime(0)
+  }
+
+  const fileModels = props.fileModels || []
   const filterColumns = props.filterColumns.filter(
     (col) => typeof col.show === "undefined" || col.show === true
   )
+  const hasColumnName =
+    filterColumns.find((col) => col.isName === true) || filterColumns[0]
   const hasColumnStretch = filterColumns.find((col) => col.size === "stretch")
-  const fileModels = props.fileModels || []
 
   const colSize = (col: FilterColumn, index: number): string => {
     if ((!hasColumnStretch && index === 0) || "stretch" === col.size)
@@ -104,6 +185,16 @@ const ExplorerViewList: React.FC<
     return 0
   })
 
+  useEffect(() => {
+    window.addEventListener("click", onWindowOutside)
+    window.addEventListener("contextmenu", onWindowOutside)
+
+    return () => {
+      window.removeEventListener("click", onWindowOutside)
+      window.removeEventListener("contextmenu", onWindowOutside)
+    }
+  })
+
   return (
     <div className="explorer-view-list">
       <table className="explorer-view-list-table">
@@ -118,7 +209,7 @@ const ExplorerViewList: React.FC<
                     colSize(col, index)
                   )}
                 >
-                  {col.label}
+                  <span className="label">{col.label}</span>
                 </td>
               )
             })}
@@ -129,9 +220,13 @@ const ExplorerViewList: React.FC<
             return (
               <tr
                 key={index}
-                className="explorer-view-list-body-row"
+                className={classNames("explorer-view-list-body-row", {
+                  actived: index === rowActived
+                })}
                 onClick={(event) => onRowClick(event, item, index)}
+                onDoubleClick={(event) => onRowDoubleClick(event, item, index)}
                 onContextMenu={(event) => onRowContextMenu(event, item, index)}
+                data-row-index={index}
               >
                 {filterColumns.map((col, filterIndex) => {
                   const operation =
@@ -148,6 +243,9 @@ const ExplorerViewList: React.FC<
                         "explorer-view-list-body-cell",
                         colSize(col, filterIndex)
                       )}
+                      {...(col == hasColumnName && {
+                        "data-cell-input": filterIndex
+                      })}
                     >
                       {col.key === "name" && item.is_directory && (
                         <span className="icomoon ic-explorer-directory icon-directory"></span>
@@ -161,7 +259,20 @@ const ExplorerViewList: React.FC<
                           )}
                         ></span>
                       )}
-                      <span className="label">{value}</span>
+                      {(hasColumnName === col && (
+                        <input
+                          className={classNames("input-label", {
+                            "input-actived":
+                              index === rowActived &&
+                              filterIndex === cellActived
+                          })}
+                          value={value}
+                          title={value}
+                          spellCheck="false"
+                          data-cell-input={filterIndex}
+                          onChange={(event) => false}
+                        />
+                      )) || <span className="label">{value}</span>}
                     </td>
                   )
                 })}

@@ -44,7 +44,7 @@ const ContextMenu: React.FC<
   ContextMenuProps & React.HTMLAttributes<HTMLDivElement>
 > = (props) => {
   const appDispatch = useAppDispatch()
-  const isMenuShow = useAppSelector(ContextMenuSelector.isMenuShow)
+  const isContextMenuShow = useAppSelector(ContextMenuSelector.isMenuShow)
   const offsetX = useAppSelector(ContextMenuSelector.offsetX)
   const offsetY = useAppSelector(ContextMenuSelector.offsetY)
   const list = useAppSelector(ContextMenuSelector.list)
@@ -86,12 +86,12 @@ const ContextMenu: React.FC<
     <div
       className={className(
         "context-menu-wrapper",
-        { show: isMenuShow },
+        // { show: isMenuShow },
         props.className
       )}
     >
       <div
-        className={className("context-menu", { show: isMenuShow })}
+        className={className("context-menu", { show: isContextMenuShow })}
         style={{
           top: offsetY + "px",
           left: offsetX + "px"
