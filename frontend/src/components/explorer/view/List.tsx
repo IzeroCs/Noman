@@ -1,10 +1,11 @@
 import classNames from "classnames"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import FileModel, { FileAdapter } from "../model/File"
 import { OnDirectoryClickCallback, OnFileClickCallback } from "../"
 import { useAppSelector } from "../../../store/Hooks"
 import { ContextMenuSelector } from "../../../store/reducers/ContextMenu"
 import { OnContextMenuClickCallback } from "../View"
+import KeyEvent from "../../../core/event/KeyEvent"
 
 export type FilterColumn = {
   key: string
@@ -28,61 +29,105 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
   const isContextMenuShow = useAppSelector(ContextMenuSelector.isMenuShow)
   const [rowActived, setRowActived] = useState(-1)
   const [cellActived, setCellActived] = useState(-1)
+
+  const cellNameElement = useRef<HTMLElement | any>()
+  const cellNameInput = useRef<HTMLInputElement | any>()
   const [cellNameFocus, setCellNameFocus] = useState(false)
+  const [cellNameTime, setCellNameTime] = useState(-1)
 
-  let cellNameElement: any = null
-  let cellNameInput: any = null
-  let cellNameTime: number = -1
-
-  const dispatchCellNameActived = (targetElement: any) => {
-    cellNameInput = Object.values(targetElement.children).find((child: any) =>
+  const dispatchCellNameActived = (targetElement: any, focusNow?: boolean) => {
+    const input: any = Object.values(targetElement.children).find((child: any) =>
       child.getAttribute("data-cell-input")
     )
 
-    cellNameElement = targetElement
-    cellNameTime = Date.now()
+    if (!input) {
+      return
+    }
+
+    cellNameInput.current = input
+    cellNameElement.current = targetElement
+    setCellNameTime(focusNow ? 0 : Date.now())
     setCellNameFocus(false)
   }
 
   const dispatchCellNameFocusNow = () => {
-    if (cellNameInput && cellNameInput.tagName === "INPUT") {
-      cellNameInput.setSelectionRange(cellNameInput.value.length, cellNameInput.value.length)
-      cellNameInput.focus()
-      setCellNameFocus(true)
+    const input = cellNameInput.current
 
-      setCellActived(parseInt(cellNameElement.getAttribute("data-cell-input")))
+    if (cellNameElement.current && input && input.tagName === "INPUT") {
+      input.setSelectionRange(input.value.length, input.value.length)
+      input.focus()
+      setCellNameFocus(true)
+      setCellActived(parseInt(cellNameElement.current.getAttribute("data-cell-input") || ""))
+    } else {
+      setCellNameTime(-1)
+      setCellNameFocus(false)
     }
   }
 
   const dispatchCellNameFocusInterval = () => {
-    if (cellNameFocus === false && cellNameTime !== -1 && Date.now() - cellNameTime > 1000) {
+    if (cellNameFocus === false && cellNameTime !== -1 && Date.now() - cellNameTime > 500) {
       dispatchCellNameFocusNow()
     }
   }
 
   const dispatchCellNameUnfocus = () => {
-    cellNameInput = null
-    cellNameElement = null
-    cellNameTime = -1
-
+    cellNameElement.current = null
+    cellNameInput.current = null
+    setCellNameTime(-1)
     setCellNameFocus(false)
   }
 
   const onRowKeyDown = (event: any) => {
-    const keycode = event.keyCode
+    const rowElement = document.querySelector(`[data-row-index="${rowActived}"]`)
+    let pass = true
 
-    // console.log(keycode)
+    switch (event.keyCode) {
+      case KeyEvent.KEY_ESCAPE:
+        dispatchCellNameUnfocus()
+        break
+
+      case KeyEvent.KEY_F2:
+        const cellInput = rowElement?.querySelector(`[data-cell-input]`)
+
+        if (cellInput) {
+          dispatchCellNameActived(cellInput, true)
+        } else {
+          pass = false
+        }
+        break
+
+      default:
+        pass = false
+    }
+
+    console.log("Pass", pass, event.keyCode)
+    // if (pass) {
+    //   event.preventDefault()
+    //   event.stopPropagation()
+
+    //   return false
+    // }
+
+    return true
+  }
+
+  const onWindowKeyDown = (event: any) => {
+    if (rowActived !== -1) {
+      return onRowKeyDown(event)
+    }
+
+    return true
   }
 
   const onRowClick = (event: any, fileModel: FileModel, index: number): any => {
     const targetElement = event.target
+    const parentElement = targetElement.parentElement
 
     if (
       targetElement &&
       rowActived === index &&
       targetElement.getAttribute("data-cell-input") !== null
     ) {
-      console.log("Cell Row actived")
       dispatchCellNameActived(targetElement)
     } else {
       setCellActived(-1)
@@ -93,7 +138,6 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
     }
 
     setRowActived(index)
-    window.addEventListener("keydown", onRowKeyDown)
 
     if (!isContextMenuShow) {
       event.preventDefault()
@@ -104,12 +148,14 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
   }
 
   const onRowDoubleClick = (event: any, fileModel: FileModel, index: number): any => {
-    let pass = false
+    let pass = true
 
     if (props.onDirectoryClick && fileModel.is_directory) {
       props.onDirectoryClick(fileModel)
     } else if (props.onFileClick) {
       props.onFileClick(fileModel)
+    } else {
+      pass = false
     }
 
     event.preventDefault()
@@ -119,7 +165,6 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
       setRowActived(-1)
       setCellActived(-1)
       event.stopPropagation()
-      window.removeEventListener("keydown", onRowKeyDown)
     }
 
     return false
@@ -195,10 +240,12 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
 
     window.addEventListener("click", onWindowOutside)
     window.addEventListener("contextmenu", onWindowOutside)
+    window.addEventListener("keydown", onWindowKeyDown)
 
     return () => {
       window.removeEventListener("click", onWindowOutside)
       window.removeEventListener("contextmenu", onWindowOutside)
+      window.removeEventListener("keydown", onWindowKeyDown)
       clearInterval(cellNameInterval)
     }
   })
@@ -221,17 +268,17 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
           </tr>
         </thead>
         <tbody className="explorer-view-list-body">
-          {fileModels.map((item, index) => {
+          {fileModels.map((item, fileIndex) => {
             return (
               <tr
-                key={index}
+                key={fileIndex}
                 className={classNames("explorer-view-list-body-row", {
-                  actived: index === rowActived
+                  actived: fileIndex === rowActived
                 })}
-                onClick={(event) => onRowClick(event, item, index)}
-                onDoubleClick={(event) => onRowDoubleClick(event, item, index)}
-                onContextMenu={(event) => onRowContextMenu(event, item, index)}
-                data-row-index={index}
+                onClick={(event) => onRowClick(event, item, fileIndex)}
+                onDoubleClick={(event) => onRowDoubleClick(event, item, fileIndex)}
+                onContextMenu={(event) => onRowContextMenu(event, item, fileIndex)}
+                data-row-index={fileIndex}
               >
                 {filterColumns.map((col, filterIndex) => {
                   const operation = FileAdapter[col.key as keyof typeof FileAdapter]
@@ -266,15 +313,15 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
                         <input
                           className={classNames("input-label", {
                             "input-actived":
-                              index === rowActived &&
+                              fileIndex === rowActived &&
                               filterIndex === cellActived &&
                               cellNameFocus === true
                           })}
-                          value={value}
+                          defaultValue={value}
                           title={value}
+                          key={`name:${value}`}
                           spellCheck="false"
                           data-cell-input={filterIndex}
-                          onChange={(event) => false}
                         />
                       )) || <span className="label">{value}</span>}
                     </td>
