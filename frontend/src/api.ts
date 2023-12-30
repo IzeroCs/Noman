@@ -1,5 +1,5 @@
 import axios from "axios"
-import { AuthSign } from "./core/auth/Sign"
+import { Sign } from "./components/auth/Sign"
 
 let retryRefreshToken = false
 
@@ -9,8 +9,7 @@ axios.defaults.withCredentials = true
 axios.interceptors.request.use(
   (config) => {
     if (config.url !== "/users/refresh") {
-      config.headers.Authorization =
-        "Bearer " + AuthSign.getAccessTokenStorage() || ""
+      config.headers.Authorization = "Bearer " + Sign.getAccessTokenStorage() || ""
     }
     return config
   },
@@ -23,13 +22,9 @@ axios.interceptors.response.use(
     const originalConfig = err.config
 
     if (originalConfig.url !== "/users/signin" && err.response) {
-      const refreshTokenStorage = AuthSign.getRefreshTokenStorage()
+      const refreshTokenStorage = Sign.getRefreshTokenStorage()
 
-      if (
-        err.response.status === 401 &&
-        refreshTokenStorage &&
-        !retryRefreshToken
-      ) {
+      if (err.response.status === 401 && refreshTokenStorage && !retryRefreshToken) {
         retryRefreshToken = true
 
         try {
@@ -46,12 +41,12 @@ axios.interceptors.response.use(
           }
 
           retryRefreshToken = false
-          AuthSign.setAccessTokenStorage(accessToken)
-          AuthSign.setRefreshTokenStorage(refreshToken)
+          Sign.setAccessTokenStorage(accessToken)
+          Sign.setRefreshTokenStorage(refreshToken)
           return axios(originalConfig)
         } catch (error) {
-          AuthSign.removeAccessTokenStorage()
-          AuthSign.removeRefreshTokenStorage()
+          Sign.removeAccessTokenStorage()
+          Sign.removeRefreshTokenStorage()
           return Promise.reject(error)
         }
       }

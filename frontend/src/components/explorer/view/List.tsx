@@ -1,31 +1,25 @@
 import classNames from "classnames"
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useContext } from "react"
 import FileModel, { FileAdapter } from "../model/File"
 import { OnDirectoryClickCallback, OnFileClickCallback } from "../"
 import { useAppSelector } from "../../../store/Hooks"
 import { ContextMenuSelector } from "../../../store/reducers/ContextMenu"
-import { OnContextMenuClickCallback } from "../View"
+import { ContextMenuDisplay } from "../ContextMenu"
+import { FilterColumn } from "../FilterColumn"
+import { MainContext } from "../../include/Main"
 import KeyEvent from "../../../core/event/KeyEvent"
-
-export type FilterColumn = {
-  key: string
-  label: string
-  show?: boolean
-  size?: "small" | "medium" | "large" | "stretch" | undefined
-  isName?: boolean
-}
 
 type ExplorerViewListProps = {
   filterColumns: Array<FilterColumn>
   fileModels?: Array<FileModel>
   onDirectoryClick?: OnDirectoryClickCallback
   onFileClick?: OnFileClickCallback
-  onContextMenuClick: OnContextMenuClickCallback
 }
 
 const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HTMLDivElement>> = (
   props
 ) => {
+  const mainContext = useContext(MainContext)
   const isContextMenuShow = useAppSelector(ContextMenuSelector.isMenuShow)
   const [rowActived, setRowActived] = useState(-1)
   const [cellActived, setCellActived] = useState(-1)
@@ -100,13 +94,12 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
         pass = false
     }
 
-    console.log("Pass", pass, event.keyCode)
-    // if (pass) {
-    //   event.preventDefault()
-    //   event.stopPropagation()
+    if (pass) {
+      event.preventDefault()
+      event.stopPropagation()
 
-    //   return false
-    // }
+      return false
+    }
 
     return true
   }
@@ -121,7 +114,6 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
 
   const onRowClick = (event: any, fileModel: FileModel, index: number): any => {
     const targetElement = event.target
-    const parentElement = targetElement.parentElement
 
     if (
       targetElement &&
@@ -170,12 +162,15 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
     return false
   }
 
-  const onRowContextMenu = (event: any, fileModel: FileModel, index: number): any => {
+  const onRowContextMenuHandle = (event: any, fileModel: FileModel, fileIndex: number): any => {
     dispatchCellNameUnfocus()
-    setRowActived(index)
+    setRowActived(fileIndex)
     event.preventDefault()
     event.stopPropagation()
-    props.onContextMenuClick(event, fileModel, index)
+    ContextMenuDisplay(event)
+    mainContext.setOnContextMenuClick((event, tag, index, children) => {
+      console.log("Context click: ", tag)
+    })
 
     return false
   }
@@ -277,7 +272,7 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
                 })}
                 onClick={(event) => onRowClick(event, item, fileIndex)}
                 onDoubleClick={(event) => onRowDoubleClick(event, item, fileIndex)}
-                onContextMenu={(event) => onRowContextMenu(event, item, fileIndex)}
+                onContextMenu={(event) => onRowContextMenuHandle(event, item, fileIndex)}
                 data-row-index={fileIndex}
               >
                 {filterColumns.map((col, filterIndex) => {

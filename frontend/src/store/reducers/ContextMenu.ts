@@ -31,10 +31,7 @@ export const ContextMenu = createSlice({
       state.offsetY = action.payload.y
     },
 
-    setMenuList: (
-      state,
-      action: PayloadAction<{ list: Array<ContextMenuItem> }>
-    ) => {
+    setMenuList: (state, action: PayloadAction<{ list: Array<ContextMenuItem> }>) => {
       state.list = action.payload.list
     }
   }

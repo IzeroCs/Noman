@@ -3,15 +3,13 @@ import { Spinner } from "../include/Splash"
 import { useState } from "react"
 import classNames from "classnames"
 import useAxios from "axios-hooks"
-import { AuthSign } from "../../core/auth/Sign"
+import { Sign } from "./Sign"
 
 export type SignInProps = {
   onRefetch: () => {}
 }
 
-const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (
-  props
-) => {
+const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const [notice, setNotice] = useState("")
   const [{ loading }, axiosExecute] = useAxios(
     {
@@ -34,8 +32,8 @@ const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (
           return setNotice(t("auth:signin.notice_failed_login"))
         }
 
-        AuthSign.setAccessTokenStorage(res.data.accessToken)
-        AuthSign.setRefreshTokenStorage(res.data.refreshToken)
+        Sign.setAccessTokenStorage(res.data.accessToken)
+        Sign.setRefreshTokenStorage(res.data.refreshToken)
 
         setNotice("")
         props.onRefetch()
@@ -79,10 +77,7 @@ const SignIn: React.FC<SignInProps & React.HTMLAttributes<HTMLDivElement>> = (
           />
         </div>
         <div className="signin-row">
-          <button
-            type="submit"
-            className={classNames("signin-button", { logging: loading })}
-          >
+          <button type="submit" className={classNames("signin-button", { logging: loading })}>
             {loading && <Spinner />}
             {!loading && <span>{t("auth:signin.button")}</span>}
           </button>

@@ -16,12 +16,9 @@ const App: React.FC = () => {
     method: "GET"
   })
 
-  const [windowHeight, setWindowHeight] = useState(
-    document.documentElement.clientHeight
-  )
+  const [windowHeight, setWindowHeight] = useState(document.documentElement.clientHeight)
 
-  const dispatchResize = () =>
-    setWindowHeight(document.documentElement.clientHeight)
+  const dispatchResize = () => setWindowHeight(document.documentElement.clientHeight)
   const dispatchContextMenu = (e: any) => e.preventDefault()
 
   const onRefetch = (): any => refetch()

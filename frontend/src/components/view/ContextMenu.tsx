@@ -1,17 +1,17 @@
 import className from "classnames"
 import React, { useEffect, useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/Hooks"
-import {
-  ContextMenuAction,
-  ContextMenuSelector
-} from "../../store/reducers/ContextMenu"
+import { ContextMenuAction, ContextMenuSelector } from "../../store/reducers/ContextMenu"
 
-export type OnContextMenuCallback = (
-  event: React.MouseEvent,
-  list: Array<ContextMenuItem>
+export type OnContextMenuItemClick = (
+  event: any,
+  tag: number,
+  index: number,
+  children: boolean
 ) => any
 
 export type ContextMenuItem = {
+  tag: number
   title: string
   icon?: string
   disabled?: boolean
@@ -30,19 +30,17 @@ type ContextMenuItemProps = {
   item: ContextMenuItem
 }
 
-const ConextMenuItem: React.FC<
-  ContextMenuItemProps & React.HTMLAttributes<HTMLDivElement>
-> = (props) => {
+const ConextMenuItem: React.FC<ContextMenuItemProps & React.HTMLAttributes<HTMLDivElement>> = (
+  props
+) => {
   return (
-    <div className={className("context-menu-item", props.className)}>
+    <div className={className("context-menu-item", props.className)} onClick={props.onClick}>
       {props.children}
     </div>
   )
 }
 
-const ContextMenu: React.FC<
-  ContextMenuProps & React.HTMLAttributes<HTMLDivElement>
-> = (props) => {
+const ContextMenu: React.FC<ContextMenuProps & React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const appDispatch = useAppDispatch()
   const isContextMenuShow = useAppSelector(ContextMenuSelector.isMenuShow)
   const offsetX = useAppSelector(ContextMenuSelector.offsetX)
@@ -74,22 +72,14 @@ const ContextMenu: React.FC<
     if (changeOffsetX > limitOffsetX) changeOffsetX = limitOffsetX
     if (changeOffsetY > limitOffsetY) changeOffsetY = limitOffsetY
     if (changeOffsetX !== offsetX || changeOffsetY !== offsetY) {
-      appDispatch(
-        ContextMenuAction.setOffset({ x: changeOffsetX, y: changeOffsetY })
-      )
+      appDispatch(ContextMenuAction.setOffset({ x: changeOffsetX, y: changeOffsetY }))
     }
 
     return () => window.removeEventListener("click", checkClickOn)
   }, [setIsHasIcon, list, offsetX, offsetY, appDispatch])
 
   return (
-    <div
-      className={className(
-        "context-menu-wrapper",
-        // { show: isMenuShow },
-        props.className
-      )}
-    >
+    <div className={className("context-menu-wrapper", props.className)}>
       <div
         className={className("context-menu", { show: isContextMenuShow })}
         style={{
@@ -109,15 +99,16 @@ const ContextMenu: React.FC<
                 divider: item.divider,
                 children: item.childrens
               })}
+              onClick={(event) => {
+                event.preventDefault()
+              }}
             >
               {isHasIcon && (
                 <span
                   className={className(
                     "context-menu-icon",
                     "icomoon",
-                    !item.icon
-                      ? "ic-context-menu-invisible invisible"
-                      : item.icon
+                    !item.icon ? "ic-context-menu-invisible invisible" : item.icon
                   )}
                 ></span>
               )}
@@ -131,18 +122,10 @@ const ContextMenu: React.FC<
                   }}
                 >
                   {item.childrens.map(
-                    (
-                      childrenItem: ContextMenuChildrenItem,
-                      childrenIndex: number
-                    ) => {
+                    (childrenItem: ContextMenuChildrenItem, childrenIndex: number) => {
                       return (
-                        <div
-                          className="context-menu-children-item"
-                          key={childrenIndex}
-                        >
-                          <span className="context-menu-title">
-                            {childrenItem.title}
-                          </span>
+                        <div className="context-menu-children-item" key={childrenIndex}>
+                          <span className="context-menu-title">{childrenItem.title}</span>
                         </div>
                       )
                     }
