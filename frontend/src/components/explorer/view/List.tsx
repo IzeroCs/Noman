@@ -1,12 +1,11 @@
 import classNames from "classnames"
-import React, { useState, useEffect, useRef, useContext } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import FileModel, { FileAdapter } from "../model/File"
 import { OnDirectoryClickCallback, OnFileClickCallback } from "../"
 import { useAppSelector } from "../../../store/Hooks"
 import { ContextMenuSelector } from "../../../store/reducers/ContextMenu"
 import { ContextMenuDisplay } from "../ContextMenu"
 import { FilterColumn } from "../FilterColumn"
-import { MainContext } from "../../include/Main"
 import KeyEvent from "../../../core/event/KeyEvent"
 
 type ExplorerViewListProps = {
@@ -19,7 +18,6 @@ type ExplorerViewListProps = {
 const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HTMLDivElement>> = (
   props
 ) => {
-  const mainContext = useContext(MainContext)
   const isContextMenuShow = useAppSelector(ContextMenuSelector.isMenuShow)
   const [rowActived, setRowActived] = useState(-1)
   const [cellActived, setCellActived] = useState(-1)
@@ -168,9 +166,6 @@ const ExplorerViewList: React.FC<ExplorerViewListProps & React.HTMLAttributes<HT
     event.preventDefault()
     event.stopPropagation()
     ContextMenuDisplay(event)
-    mainContext.setOnContextMenuClick((event, tag, index, children) => {
-      console.log("Context click: ", tag)
-    })
 
     return false
   }

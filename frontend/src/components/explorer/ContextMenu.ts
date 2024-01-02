@@ -4,7 +4,7 @@ import i18next from "../../i18next"
 import { ContextMenuItem } from "../view/ContextMenu"
 import { ContextMenuAction } from "../../store/reducers/ContextMenu"
 
-export enum ContextMenuIndexed {
+export enum ContextMenuTag {
   RENAME = 1,
   COPY = 2,
   CUT = 3,
@@ -16,38 +16,38 @@ export enum ContextMenuIndexed {
 
 export const ContextMenuList: Array<ContextMenuItem> = [
   {
-    tag: ContextMenuIndexed.RENAME,
+    tag: ContextMenuTag.RENAME,
     title: i18next.t("explorer:view-list.context_menu_rename"),
     icon: "ic-action-rename"
   },
   {
-    tag: ContextMenuIndexed.COPY,
+    tag: ContextMenuTag.COPY,
     title: i18next.t("explorer:view-list.context_menu_copy"),
     icon: "ic-action-copy"
   },
   {
-    tag: ContextMenuIndexed.CUT,
+    tag: ContextMenuTag.CUT,
     title: i18next.t("explorer:view-list.context_menu_cut"),
     icon: "ic-action-cut"
   },
   {
-    tag: ContextMenuIndexed.DELETE,
+    tag: ContextMenuTag.DELETE,
     title: i18next.t("explorer:view-list.context_menu_delete"),
     icon: "ic-action-delete"
   },
   {
-    tag: ContextMenuIndexed.DETAIL,
+    tag: ContextMenuTag.DETAIL,
     title: i18next.t("explorer:view-list.context_menu_detail"),
     icon: "ic-action-detail",
     divider: true
   },
   {
-    tag: ContextMenuIndexed.FAVORITES,
+    tag: ContextMenuTag.FAVORITES,
     title: i18next.t("explorer:view-list.context_menu_favorites"),
     icon: "ic-action-favorites"
   },
   {
-    tag: ContextMenuIndexed.SHARE,
+    tag: ContextMenuTag.SHARE,
     title: i18next.t("explorer:view-list.context_menu_share"),
     icon: "ic-action-share"
   }

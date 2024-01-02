@@ -1,10 +1,8 @@
-import { useContext } from "react"
 import { OnDirectoryClickCallback, OnFileClickCallback } from "."
 import { FilterColumnList } from "./FilterColumn"
 import FileModel from "./model/File"
 import ExplorerViewGrid from "./view/Grid"
 import ExplorerViewList from "./view/List"
-import { MainContext } from "../include/Main"
 
 type ExplorerViewProps = {
   type?: "grid" | "list"
